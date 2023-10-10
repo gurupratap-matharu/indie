@@ -1,11 +1,8 @@
 {% extends "users/base.html" %}
-
 {% load i18n %}
-
 {% block title %}
     {{ user.get_full_name }} | {% trans "Edit Profile" %} | Falcon
 {% endblock title %}
-
 {% block settingscontent %}
     <div class="card">
         <div class="card-header">

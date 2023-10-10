@@ -1,15 +1,11 @@
 {% extends "users/base.html" %}
-
 {% load static %}
-
 {% block title %}
     {{ user.get_full_name }} | Falcon
 {% endblock title %}
-
 {% block breadcrumb %}
     Profile
 {% endblock breadcrumb %}
-
 {% block settingscontent %}
     <div class="card h-100">
         <div class="card-header pb-0 p-3">
@@ -41,13 +37,16 @@
                 </li>
                 <li class="list-group-item border-0 ps-0 pb-0">
                     <strong class="text-dark text-sm">Social:</strong> &nbsp;
-                    <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
+                    <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0"
+                       href="javascript:;">
                         <i class="fab fa-facebook fa-lg"></i>
                     </a>
-                    <a class="btn btn-twitter btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
+                    <a class="btn btn-twitter btn-simple mb-0 ps-1 pe-2 py-0"
+                       href="javascript:;">
                         <i class="fab fa-twitter fa-lg"></i>
                     </a>
-                    <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
+                    <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0"
+                       href="javascript:;">
                         <i class="fab fa-instagram fa-lg"></i>
                     </a>
                 </li>
