@@ -196,6 +196,7 @@ LANGUAGE_CODE = "en"
 LANGUAGES = [
     ("en", _("English")),
     ("es", _("Spanish")),
+    ("pt", _("Portuguese")),
 ]
 
 LOCALE_PATHS = [
@@ -243,6 +244,41 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 CSRF_TRUSTED_ORIGINS = ["https://*.indiecactus.xyz", "https://*.127.0.0.1"]
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[%(asctime)s][%(process)d][%(levelname)s][%(name)s] %(message)s"
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "django": {
+            "level": "INFO",
+            "handlers": ["console"],
+            "propagate": False,
+        },
+        "django.request": {
+            "level": "WARNING",
+            "handlers": ["console"],
+            "propagate": False,
+        },
+        "django.security": {
+            "level": "WARNING",
+            "handlers": ["console"],
+            "propagate": False,
+        },
+    },
+}
 
 
 if not DEBUG:
