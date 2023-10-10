@@ -9,7 +9,7 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     # User management
     path("accounts/", include("allauth.urls")),
-    # path("account/", include("users.urls")),
+    path("account/", include("users.urls")),
     path("", include("pages.urls")),
 ]
 
