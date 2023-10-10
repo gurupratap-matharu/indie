@@ -1,7 +1,8 @@
-from companies.factories import CompanyFactory
 from django.conf import settings
 from django.test import RequestFactory, TestCase
 from django.urls import reverse_lazy
+
+from companies.factories import CompanyFactory
 
 from users.adapter import MyAccountAdapter
 from users.factories import (

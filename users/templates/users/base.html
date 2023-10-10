@@ -1,11 +1,15 @@
 {% extends "layouts/base-sidebar.html" %}
+
 {% load static %}
+
 {% block title %}
     {{ user.get_full_name }} | Falcon
 {% endblock title %}
+
 {% block breadcrumb %}
     Profile
 {% endblock breadcrumb %}
+
 {% block content %}
     <div class="page-header min-height-300 border-radius-xl mt-4"
          style="background-image: url({% static 'assets/img/curved-images/curved0.jpg' %});
@@ -39,9 +43,7 @@
                 <div class="card position-sticky top-1 mb-3 h-100">
                     <ul class="nav flex-column bg-white border-radius-lg p-3">
                         <li class="nav-item">
-                            <a class="nav-link text-body"
-                               data-scroll=""
-                               href="{% url 'users:settings' %}">
+                            <a class="nav-link text-body" data-scroll="" href="{% url 'users:settings' %}">
                                 <div class="icon me-2">
                                     <i class="bi bi-person-badge-fill" aria-hidden="true"></i>
                                 </div>
@@ -49,9 +51,7 @@
                             </a>
                         </li>
                         <li class="nav-item pt-2">
-                            <a class="nav-link text-body"
-                               data-scroll=""
-                               href="{% url 'users:settings' %}">
+                            <a class="nav-link text-body" data-scroll="" href="{% url 'users:settings' %}">
                                 <div class="icon me-2">
                                     <i class="bi bi-person-vcard-fill"></i>
                                 </div>
@@ -59,9 +59,7 @@
                             </a>
                         </li>
                         <li class="nav-item pt-2">
-                            <a class="nav-link text-body"
-                               data-scroll=""
-                               href="{% url 'account_change_password' %}">
+                            <a class="nav-link text-body" data-scroll="" href="{% url 'account_change_password' %}">
                                 <div class="icon me-2">
                                     <i class="bi bi-pencil-fill" aria-hidden="true"></i>
                                 </div>
@@ -77,9 +75,7 @@
                             </a>
                         </li>
                         <li class="nav-item pt-2">
-                            <a class="nav-link text-body"
-                               data-scroll=""
-                               href="{% url 'socialaccount_connections' %}">
+                            <a class="nav-link text-body" data-scroll="" href="{% url 'socialaccount_connections' %}">
                                 <div class="icon me-2">
                                     <i class="bi bi-person-fill-gear" aria-hidden="true"></i>
                                 </div>
@@ -103,9 +99,7 @@
                             </a>
                         </li>
                         <li class="nav-item pt-2">
-                            <a class="nav-link text-body"
-                               data-scroll=""
-                               href="{% url 'users:delete' %}">
+                            <a class="nav-link text-body" data-scroll="" href="{% url 'users:delete' %}">
                                 <div class="icon me-2">
                                     <i class="bi bi-person-x-fill" aria-hidden="true"></i>
                                 </div>
@@ -116,8 +110,10 @@
                 </div>
             </div>
             <div class="col-12 col-lg-9">
+
                 {% block settingscontent %}
                 {% endblock settingscontent %}
+
             </div>
         </div>
     </div>

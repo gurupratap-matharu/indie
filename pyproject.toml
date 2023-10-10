@@ -42,6 +42,7 @@ sections = "FUTURE,STDLIB,DJANGO,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
 exclude = '''
 /(
   | migrations
+  | docs
 )/
 '''
 

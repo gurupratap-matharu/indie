@@ -1,7 +1,8 @@
 import logging
 
-from allauth.account.adapter import DefaultAccountAdapter
 from django.conf import settings
+
+from allauth.account.adapter import DefaultAccountAdapter
 
 logger = logging.getLogger(__name__)
 
