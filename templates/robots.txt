@@ -1,0 +1,18 @@
+User-Agent: *
+User-agent: AdsBot-Google
+Disallow: /admin/
+Disallow: /private/
+Disallow: /account/
+Disallow: /accounts/
+Disallow: /captcha/
+Disallow: /trips/
+Disallow: /cart/
+Disallow: /orders/
+Disallow: /payments/
+Disallow: /coupons/
+
+User-agent: GPTBot
+Disallow: /
+
+# Sitemap files
+Sitemap: https://{{ request.get_host }}/sitemap.xml

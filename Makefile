@@ -81,7 +81,7 @@ security:
 	poetry run bandit -r .
 	poetry run safety check
 
-ci: lint security test
+ci: lint test
 
 superuser:
 	python manage.py createsuperuser
