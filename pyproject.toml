@@ -62,7 +62,6 @@ use_gitignore = true
 format_attribute_template_tags = true
 format_css=true
 format_js=true
-line_break_after_multiline_tag=true
 
 [tool.djlint.css]
 indent_size = 5
