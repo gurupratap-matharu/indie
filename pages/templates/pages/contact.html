@@ -1,6 +1,10 @@
-<h1>Contact</h1>
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Send</button>
-</form>
+{% extends "layouts/base.html" %}
+
+{% block content %}
+    <h1>Contact Indie Cactus 🌵🏜️</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Send</button>
+    </form>
+{% endblock content %}

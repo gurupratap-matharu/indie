@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.apple",
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.facebook",
     "django_extensions",
@@ -80,7 +81,7 @@ AUTHENTICATION_BACKENDS = (
 
 # Django allauth
 ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
@@ -94,11 +95,14 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 
 LOGIN_REDIRECT_URL = reverse_lazy("pages:home")
-# ACCOUNT_ADAPTER = "users.adapter.MyAccountAdapter"
+ACCOUNT_ADAPTER = "users.adapter.MyAccountAdapter"
 
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
+        "EMAIL_AUTHENTICATION": True,
+        "VERIFIED_EMAIL": True,
         "SCOPE": [
             "profile",
             "email",
@@ -108,6 +112,8 @@ SOCIALACCOUNT_PROVIDERS = {
         },
     },
     "facebook": {
+        "EMAIL_AUTHENTICATION": True,
+        "VERIFIED_EMAIL": True,
         "METHOD": "oauth2",
         "SCOPE": [
             "email",
