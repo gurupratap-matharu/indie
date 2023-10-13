@@ -13,6 +13,7 @@ from pages.views import (
     HomePageView,
     PrivacyPageView,
     RobotsTxtView,
+    SiteMapPageView,
     TermsPageView,
 )
 
@@ -109,6 +110,24 @@ class PrivacyPageTests(SimpleTestCase):
     def test_privacy_page_url_resolves_privacypageview(self):
         view = resolve(self.url)
         self.assertEqual(view.func.__name__, PrivacyPageView.as_view().__name__)
+
+
+@tag("pages", "fast")
+class SiteMapPageTests(SimpleTestCase):
+    def setUp(self):
+        self.url = reverse("pages:sitemap")
+        self.response = self.client.get(self.url)
+        self.template_name = "pages/sitemap.html"
+
+    def test_sitemap_page_works(self):
+        self.assertEqual(self.response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(self.response, self.template_name)
+        self.assertContains(self.response, "Sitemap")
+        self.assertNotContains(self.response, "Hi I should not be on this page!")
+
+    def test_sitemap_page_url_resolves_sitemap_pageview(self):
+        view = resolve(self.url)
+        self.assertEqual(view.func.__name__, SiteMapPageView.as_view().__name__)
 
 
 class RobotsTxtTests(SimpleTestCase):

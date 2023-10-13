@@ -29,6 +29,10 @@ class PrivacyPageView(TemplateView):
     template_name: str = "pages/privacy.html"
 
 
+class SiteMapPageView(TemplateView):
+    template_name: str = "pages/sitemap.html"
+
+
 class ContactPageView(SuccessMessageMixin, FormView):
     template_name: str = "pages/contact.html"
     form_class = ContactForm

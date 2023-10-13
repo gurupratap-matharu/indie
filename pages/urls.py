@@ -9,6 +9,7 @@ urlpatterns = [
     path("about/", views.AboutPageView.as_view(), name="about"),
     path("terms/", views.TermsPageView.as_view(), name="terms"),
     path("privacy/", views.PrivacyPageView.as_view(), name="privacy"),
+    path("sitemap/", views.SiteMapPageView.as_view(), name="sitemap"),
     path("contact/", views.ContactPageView.as_view(), name="contact"),
     path("feedback/", views.FeedbackPageView.as_view(), name="feedback"),
     path("favicon.ico", views.favicon, name="favicon"),
