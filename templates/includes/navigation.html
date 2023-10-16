@@ -1,0 +1,43 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light z-index-3 py-3 shadow-none">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'pages:home' %}" rel="tooltip" title="IndieCactus" data-placement="bottom">
+            <h3>
+                <span class="d-none d-lg-inline">Indie Cactus</span> 🌵
+            </h3>
+        </a>
+        <button class="navbar-toggler shadow-none ms-2"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navigation"
+                aria-controls="navigation"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon mt-2">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </span>
+        </button>
+        <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
+            <ul class="navbar-nav navbar-nav-hover mx-auto">
+                <li class="nav-item mx-2">
+                    <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark"
+                       role="button"
+                       href="{% url 'account_login' %}">Login</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark"
+                       role="button"
+                       href="{% url 'account_signup' %}">SignUp</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item d-flex align-items-center">
+                    <a href="{% url 'pages:get-listed' %}" class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1" role="button">Get Listed</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -21,6 +21,10 @@ class AboutPageView(TemplateView):
     template_name: str = "pages/about.html"
 
 
+class GetListedView(TemplateView):
+    template_name = "pages/get_listed.html"
+
+
 class TermsPageView(TemplateView):
     template_name: str = "pages/terms.html"
 
