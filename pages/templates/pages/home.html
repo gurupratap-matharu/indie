@@ -3,10 +3,10 @@
 {% load static %}
 
 {% block content %}
-    <h1 class="text-center py-3">Indie Cactus 🌵🏜️</h1>
+    <h3 class="pt-5 text-center">Indie Cactus 🌵🏜️</h3>
     <section class="py-sm-2">
-        <div class="bg-gradient-primary position-relative m-3 border-radius-xl shadow-xl">
-            <div class="container pb-lg-8 pb-7 pt-5 postion-relative z-index-2 position-relative">
+        <div class="bg-gradient-primary position-relative m-3 mx-md-5 border-radius-2xl shadow-xl">
+            <div class="container pb-lg-8 pb-7 pt-5 z-index-2 position-relative">
                 <div class="row">
                     <div class="col-md-7 mx-auto text-center">
                         <span class="badge bg-gradient-dark mb-2">IndieCactus</span>
@@ -18,7 +18,7 @@
         </div>
         <div class="mt-n6">
             <div class="container">
-                <div class="row bg-white shadow-lg mt-n6 border-radius-md pb-4 p-3 mx-sm-0 mx-1 position-relative">
+                <div class="row bg-white shadow-xl border-radius-2xl p-3 mx-sm-0 mx-1 position-relative">
                     <div class="col-lg-6 mt-lg-n2 mt-2">
                         <label>Location</label>
                         <div class="input-group">
@@ -75,10 +75,11 @@
               console.log('flatpickr logic loaded...👋');
               const config = {
                    altInput: true,
-                   altFormat: "F j, Y",
+                   altFormat: "D, M j",
                    dateFormat: "Y-m-d",
                    minDate: "today",
                    maxDate: new Date().fp_incr(180),
+                   disableMobile: "true"
 
               }
               const checkin = flatpickr(".checkin", config);
