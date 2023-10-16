@@ -53,7 +53,7 @@
                             <span class="input-group-text"><i class="bi bi-people"></i></span>
                             <select class="form-control" id="numGuests" name="guests">
                                 <option>1</option>
-                                <option>2</option>
+                                <option selected>2</option>
                                 <option>3</option>
                                 <option>4</option>
                                 <option>5</option>
@@ -78,10 +78,15 @@
               const config = {
                    altInput: true,
                    altFormat: "D, M j",
-                   dateFormat: "Y-m-d",
+                   dateFormat: "d-m-Y",
+                   defaultDate: new Date().fp_incr(1),
                    minDate: "today",
                    maxDate: new Date().fp_incr(180),
-                   disableMobile: "true"
+                   showMonths: 2,
+                   disableMobile: "true",
+                   locale: {
+                        firstDAyOfWeek: 1, // Start from Monday
+                   }
 
               }
               const checkin = flatpickr(".checkin", config);
