@@ -5,6 +5,9 @@ reqs/
 docs/
 cookiecutter/
 
+# Vim
+tags
+
 # Macos
 .DS_Store
 

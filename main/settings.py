@@ -46,10 +46,12 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.facebook",
     "django_extensions",
+    "django_countries",
     # Local
     "pages.apps.PagesConfig",
     "base.apps.BaseConfig",
     "users.apps.UsersConfig",
+    "properties.apps.PropertiesConfig",
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,88 @@
 {% extends "layouts/base.html" %}
 
+{% load static %}
+
 {% block content %}
-    <h1>Indie Cactus 🌵🏜️</h1>
+    <h1 class="text-center py-3">Indie Cactus 🌵🏜️</h1>
+    <section class="py-sm-2">
+        <div class="bg-gradient-primary position-relative m-3 border-radius-xl shadow-xl">
+            <div class="container pb-lg-8 pb-7 pt-5 postion-relative z-index-2 position-relative">
+                <div class="row">
+                    <div class="col-md-7 mx-auto text-center">
+                        <span class="badge bg-gradient-dark mb-2">IndieCactus</span>
+                        <h3 class="text-white">Ready for your next trip?</h3>
+                        <p class="text-white">Discover your next adventure with us.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-n6">
+            <div class="container">
+                <div class="row bg-white shadow-lg mt-n6 border-radius-md pb-4 p-3 mx-sm-0 mx-1 position-relative">
+                    <div class="col-lg-6 mt-lg-n2 mt-2">
+                        <label>Location</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-geo"></i></span>
+                            <select class="form-control" name="location" placeholder="Location">
+                                <option value="mendoza" selected>Mendoza</option>
+                                <option value="buenosaires">Buenos Aires</option>
+                                <option value="cordoba">Cordoba</option>
+                                <option value="elcalafate">El Calafate</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 mt-lg-n2 mt-2">
+                        <label>Check In</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                            <input class="form-control checkin" type="date" name="checkin" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 mt-lg-n2 mt-2">
+                        <label>Check Out</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                            <input class="form-control checkout" type="date" name="checkout" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 mt-lg-n2 mt-2 form-group">
+                        <label for="numGuests">Guests</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-people"></i></span>
+                            <select class="form-control" id="numGuests" name="guests">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="d-flex justify-content-center mt-3">
+        <a href="{% url 'properties:property_list' %}" class="btn bg-gradient-primary btn-round shadow-xl">
+            <i class="bi bi-search me-3" aria-hidden="true"></i>Search
+        </a>
+    </div>
 {% endblock content %}
+
+{% block js %}
+    <script>
+         window.addEventListener('DOMContentLoaded', () => {
+              console.log('flatpickr logic loaded...👋');
+              const config = {
+                   altInput: true,
+                   altFormat: "F j, Y",
+                   dateFormat: "Y-m-d",
+                   minDate: "today",
+                   maxDate: new Date().fp_incr(180),
+
+              }
+              const checkin = flatpickr(".checkin", config);
+              const checkout = flatpickr(".checkout", config);
+         });
+    </script>
+{% endblock js %}
