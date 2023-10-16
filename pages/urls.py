@@ -9,6 +9,7 @@ urlpatterns = [
     path("about/", views.AboutPageView.as_view(), name="about"),
     path("terms/", views.TermsPageView.as_view(), name="terms"),
     path("get-listed/", views.GetListedView.as_view(), name="get-listed"),
+    path("help/", views.HelpPageView.as_view(), name="help"),
     path("privacy/", views.PrivacyPageView.as_view(), name="privacy"),
     path("sitemap/", views.SiteMapPageView.as_view(), name="sitemap"),
     path("contact/", views.ContactPageView.as_view(), name="contact"),

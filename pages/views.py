@@ -25,6 +25,10 @@ class GetListedView(TemplateView):
     template_name = "pages/get_listed.html"
 
 
+class HelpPageView(TemplateView):
+    template_name = "pages/help.html"
+
+
 class TermsPageView(TemplateView):
     template_name: str = "pages/terms.html"
 
