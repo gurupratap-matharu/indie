@@ -1,5 +1,215 @@
 {% extends "layouts/base.html" %}
 
+{% load static %}
+
 {% block content %}
-    <h1>{{ property.name }}</h1>
+    <div class="container-fluid">
+        <div class="page-header min-height-300 border-radius-xl mt-4"
+             style="background-image: url('{% static 'assets/img/curved-images/curved0.jpg' %}');
+                    background-position-y: 50%">
+            <span class="mask bg-gradient-primary opacity-6"></span>
+        </div>
+        <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
+            <div class="row gx-4">
+                <div class="col-auto">
+                    <div class="avatar avatar-xl position-relative">
+                        <img src="{% static 'assets/logos/logo-hostel-1.svg' %}" alt="profile_image" class="w-100 border-radius-lg shadow-lg" />
+                    </div>
+                </div>
+                <div class="col-auto my-auto">
+                    <div class="h-100">
+                        <h5 class="mb-1">{{ property.name }}</h5>
+                        <p class="mb-0 font-weight-bold text-sm">{{ property.city }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                    <div class="nav-wrapper position-relative end-0">
+                        <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link mb-0 px-0 py-1 active " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">
+                                    <i class="bi bi-cup-hot-fill"></i>
+                                    <span class="ms-1">Facilities</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false" tabindex="-1">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                    <span class="ms-1">Map</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false" tabindex="-1">
+                                    <i class="bi bi-card-checklist"></i>
+
+                                    <span class="ms-1">Rules</span>
+                                </a>
+                            </li>
+                            <div class="moving-tab position-absolute nav-link"
+                                 style="padding: 0px;
+                                        transition: 0.5s;
+                                        transform: translate3d(0px, 0px, 0px);
+                                        width: 84px">
+                                <a class="nav-link mb-0 px-0 py-1 active " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">-</a>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="pt-7 pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-blog card-plain">
+                        <div class="position-relative">
+                            <a class="d-block blur-shadow-image">
+                                <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/house.jpg"
+                                     alt="img-blur-shadow"
+                                     class="img-fluid shadow border-radius-lg" />
+                            </a>
+                            <div class="colored-shadow"
+                                 style="background-image: url(&quot;
+                                        https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/house.jpg&quot;
+                                        )"></div>
+                        </div>
+                        <div class="card-body px-1 pt-3">
+                            <p class="text-gradient text-dark mb-2 text-sm">Entire Apartment • 3 Guests • 2 Beds</p>
+                            <a href="javascript:;">
+                                <h5>Lovely and cosy apartment</h5>
+                            </a>
+                            <p>
+                                Siri's latest trick is offering a hands-free TV viewing experience, that will allow consumers to turn on or off their television, change inputs, fast forward.
+                            </p>
+                            <button type="button" class="btn btn-outline-primary btn-sm">From / Night</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-blog card-plain">
+                        <div class="position-relative">
+                            <a class="d-block blur-shadow-image">
+                                <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/pool.jpg"
+                                     alt="img-blur-shadow"
+                                     class="img-fluid shadow border-radius-lg" />
+                            </a>
+                            <div class="colored-shadow"
+                                 style="background-image: url(&quot;
+                                        https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/pool.jpg&quot;
+                                        )"></div>
+                        </div>
+                        <div class="card-body px-1 pt-3">
+                            <p class="text-gradient text-dark mb-2 text-sm">Private Room • 1 Guests • 1 Sofa</p>
+                            <a href="javascript:;">
+                                <h5>Single room in the center of the city</h5>
+                            </a>
+                            <p>
+                                As Uber works through a huge amount of internal management turmoil, the company is also consolidating and rationalizing more of its international business.
+                            </p>
+                            <button type="button" class="btn btn-outline-primary btn-sm">From / Night</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-blog card-plain">
+                        <div class="position-relative">
+                            <a class="d-block blur-shadow-image">
+                                <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/antalya.jpg"
+                                     alt="img-blur-shadow"
+                                     class="img-fluid shadow border-radius-lg" />
+                            </a>
+                            <div class="colored-shadow"
+                                 style="background-image: url(&quot;
+                                        https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/antalya.jpg&quot;
+                                        )"></div>
+                        </div>
+                        <div class="card-body px-1 pt-3">
+                            <p class="text-gradient text-dark mb-2 text-sm">Entire Apartment • 4 Guests • 2 Beds</p>
+                            <a href="javascript:;">
+                                <h5>Independent house bedroom kitchen</h5>
+                            </a>
+                            <p>
+                                Music is something that every person has his or her own specific opinion about. Different people have different taste, and various types of music.
+                            </p>
+                            <button type="button" class="btn btn-outline-primary btn-sm">From / Night</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-blog card-plain">
+                        <div class="position-relative">
+                            <a class="d-block blur-shadow-image">
+                                <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/tiny-house.jpg"
+                                     alt="img-blur-shadow"
+                                     class="img-fluid shadow border-radius-lg" />
+                            </a>
+                            <div class="colored-shadow"
+                                 style="background-image: url(&quot;
+                                        https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/tiny-house.jpg&quot;
+                                        )"></div>
+                        </div>
+                        <div class="card-body px-1 pt-3">
+                            <p class="text-gradient text-dark mb-2 text-sm">Entire Apartment • 2 Guests • 1 Bed</p>
+                            <a href="javascript:;">
+                                <h5>Zen Gateway with pool and garden</h5>
+                            </a>
+                            <p>
+                                Fast forward, rewind and more, without having to first invoke a specific skill, or even
+                                press a button on their remote.
+                            </p>
+                            <button type="button" class="btn btn-outline-primary btn-sm">From / Night</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-blog card-plain">
+                        <div class="position-relative">
+                            <a class="d-block blur-shadow-image">
+                                <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/air-bnb.jpg"
+                                     alt="img-blur-shadow"
+                                     class="img-fluid shadow border-radius-lg" />
+                            </a>
+                            <div class="colored-shadow"
+                                 style="background-image: url(&quot;
+                                        https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/air-bnb.jpg&quot;
+                                        )"></div>
+                        </div>
+                        <div class="card-body px-1 pt-3">
+                            <p class="text-gradient text-dark mb-2 text-sm">Entire Flat • 8 Guests • 3 Rooms</p>
+                            <a href="javascript:;">
+                                <h5>Cheapest hotels for a luxury vacation</h5>
+                            </a>
+                            <p>Today, the company announced it will be combining its rides-on-demand business and UberEATS.</p>
+                            <button type="button" class="btn btn-outline-primary btn-sm">From / Night</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-blog card-plain">
+                        <div class="position-relative">
+                            <a class="d-block blur-shadow-image">
+                                <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/palm-house.jpg"
+                                     alt="img-blur-shadow"
+                                     class="img-fluid shadow border-radius-lg" />
+                            </a>
+                            <div class="colored-shadow"
+                                 style="background-image: url(&quot;
+                                        https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/palm-house.jpg&quot;
+                                        )"></div>
+                        </div>
+                        <div class="card-body px-1 pt-3">
+                            <p class="text-gradient text-dark mb-2 text-sm">Entire Apartment • 2 Guests • 1 Bed</p>
+                            <a href="javascript:;">
+                                <h5>Cozy Double Room Near Station</h5>
+                            </a>
+                            <p>
+                                Different people have different taste, and various types of music have many ways of leaving an impact on someone.
+                            </p>
+                            <button type="button" class="btn btn-outline-primary btn-sm">From / Night</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}
