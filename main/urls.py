@@ -11,6 +11,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("account/", include("users.urls")),
     path("properties/", include("properties.urls")),
+    path("portal/", include("portal.urls")),
     path("", include("pages.urls")),
 ]
 
@@ -21,6 +22,7 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     # Add routes to test error templates
     urlpatterns += [
+        path("test403/", TemplateView.as_view(template_name="403.html")),
         path("test404/", TemplateView.as_view(template_name="404.html")),
         path("test500/", TemplateView.as_view(template_name="500.html")),
     ]
