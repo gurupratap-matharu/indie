@@ -1,0 +1,27 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %}
+    403 Forbidden
+{% endblock title %}
+
+{% block content %}
+    <main class="main-content">
+        <section class="pt-9">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 my-auto">
+                        <h1 class="display-1 text-bolder text-gradient text-primary">Error 403</h1>
+                        <h2>Hmm. Forbidden to access</h2>
+                        <p class="lead">We are sorry but you are not allowed to view this page.</p>
+                        <a href="{% url 'pages:home' %}" type="button" class="btn bg-gradient-primary mt-4">Go to Homepage</a>
+                    </div>
+                    <div class="col-lg-6 my-auto position-relative d-none d-md-block">
+                        <img class="w-100 position-relative" src="{% static 'assets/img/illustrations/error-404.png' %}" alt="403-error" />
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock content %}
