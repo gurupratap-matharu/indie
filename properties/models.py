@@ -2,7 +2,7 @@ import logging
 import uuid
 
 from django.conf import settings
-from django.core.validators import RegexValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.text import slugify
@@ -85,3 +85,75 @@ class Property(models.Model):
 
     def get_absolute_url(self) -> str:
         return reverse_lazy("properties:property_detail", kwargs={"slug": self.slug})
+
+
+class Room(models.Model):
+    BASIC = "BA"
+    STANDARD = "ST"
+    DELUXE = "DL"
+    SUPERIOR = "SP"
+
+    GRADE_CHOICES = [
+        (BASIC, "Basic"),
+        (STANDARD, "Standard"),
+        (DELUXE, "Deluxe"),
+        (SUPERIOR, "Superior"),
+    ]
+
+    MIXED_DORM = "XD"
+    MALE_DORM = "MD"
+    FEMALE_DORM = "FD"
+    PRIVATE_ROOM = "PR"
+    DOUBLE_BED = "DB"
+    APARTMENT = "AP"
+    FAMILY_ROOM = "FR"
+    PRIVATE_TENT = "PT"
+    SHARED_TENT = "ST"
+
+    ROOM_TYPE_CHOICES = [
+        (MIXED_DORM, "Mixed Dorm"),
+        (MALE_DORM, "Male Dorm"),
+        (FEMALE_DORM, "Female Dorm"),
+        (PRIVATE_ROOM, "Private Room"),
+        (DOUBLE_BED, "Double Bed"),
+        (APARTMENT, "Apartment"),
+        (FAMILY_ROOM, "Family Room"),
+        (PRIVATE_TENT, "Private Tent"),
+        (SHARED_TENT, "Shared Tent"),
+    ]
+
+    property = models.ForeignKey(
+        "properties.Property", related_name="rooms", on_delete=models.CASCADE
+    )
+    name = models.CharField(_("Name"), blank=True, max_length=64)
+    grade = models.CharField(
+        _("Grade"), max_length=3, choices=GRADE_CHOICES, default=STANDARD
+    )
+    num_of_guests = models.PositiveSmallIntegerField(
+        _("Number of Guests"), validators=[MinValueValidator(1), MaxValueValidator(20)]
+    )
+    room_type = models.CharField(
+        _("Room Type"), max_length=3, choices=ROOM_TYPE_CHOICES, default=PRIVATE_ROOM
+    )
+    ensuite = models.BooleanField(
+        verbose_name=_("Ensuite"),
+        help_text=_("Does it have attached bathroom?"),
+        default=True,
+    )
+    description = models.TextField(_("Description"), blank=True)
+    weekday_price = models.DecimalField(
+        _("Weekday Price"), max_digits=12, decimal_places=2
+    )
+    weekend_price = models.DecimalField(
+        _("Weekend Price"),
+        max_digits=12,
+        decimal_places=2,
+        validators=[MinValueValidator(1)],
+    )
+
+    class Meta:
+        verbose_name = "room"
+        verbose_name_plural = "rooms"
+
+    def __str__(self):
+        return self.name

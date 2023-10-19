@@ -135,7 +135,7 @@ SOCIALACCOUNT_PROVIDERS = {
             "short_name",
         ],
         "EXCHANGE_TOKEN": True,
-        "LOCALE_FUNC": lambda request: "en_US",
+        "LOCALE_FUNC": lambda _: "en_US",
         "VERIFIED_EMAIL": False,
         "VERSION": "v13.0",
         "GRAPH_API_URL": "https://graph.facebook.com/v13.0",

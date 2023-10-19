@@ -23,15 +23,6 @@
         <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
             <ul class="navbar-nav navbar-nav-hover mx-auto">
                 <li class="nav-item mx-2">
-                    <a class="nav-link icon-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark"
-                       href="{% url 'account_login' %}">Login<i class="bi bi-box-arrow-in-right ms-1"></i></a>
-                </li>
-                <li class="nav-item mx-2">
-                    <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark"
-                       role="button"
-                       href="{% url 'account_signup' %}">SignUp <i class="bi bi-person-add ms-1"></i></a>
-                </li>
-                <li class="nav-item mx-2">
                     <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark"
                        role="button"
                        href="{% url 'pages:help' %}">Help
@@ -42,6 +33,46 @@
             <ul class="navbar-nav">
                 <li class="nav-item d-flex align-items-center">
                     <a href="{% url 'pages:get-listed' %}" class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1" role="button">Get Listed</a>
+                </li>
+                <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                        <div class="dropdown nav-link">
+                            <a href="#"
+                               id="dropdownMenuButton"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false"
+                               aria-label="Open user menu"
+                               type="button">
+                                {% with avatar_url=request.user.socialaccount_set.all.0.get_avatar_url %}
+                                    {% if avatar_url %}
+                                        <img src="{{ avatar_url }}" alt="profile_image" class="avatar avatar-sm rounded-circle" />
+                                    {% else %}
+                                        <span class="avatar avatar-sm rounded-circle border text-dark">{{ request.user.email|slice:":2"|upper }}</span>
+                                    {% endif %}
+                                {% endwith %}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end px-2 py-3" aria-labelledby="dropdownMenuButton">
+                                <li>
+                                    <a class="dropdown-item border-radius-md" href="">Profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item border-radius-md" href="">Edit Profile</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li>
+                                    <a class="dropdown-item border-radius-md" href="{% url 'account_logout' %}">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'account_login' %}" class="nav-link mt-2">
+                            <h5>
+                                <i class="bi bi-person-circle"></i>
+                            </h5>
+                        </a>
+                    {% endif %}
                 </li>
             </ul>
         </div>
