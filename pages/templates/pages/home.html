@@ -5,6 +5,7 @@
 {% block content %}
 
     {% include "includes/navigation.html" %}
+    {% include "includes/alert.html" %}
 
     <section class="py-sm-2">
         <div class="bg-gradient-primary position-relative m-3 mx-md-5 border-radius-2xl shadow-xl">
@@ -74,7 +75,6 @@
 {% block js %}
     <script>
          window.addEventListener('DOMContentLoaded', () => {
-              console.log('flatpickr logic loaded...👋');
               const config = {
                    altInput: true,
                    altFormat: "D, M j",

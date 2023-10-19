@@ -1,0 +1,42 @@
+{% comment %} 
+
+These are sample toasts which need to be customized with a message.
+
+The message can be passed in as a context to this template in include call
+Veer you will have to initialize the toast and then show it. We have a js snippet
+for it in the static folder. 
+
+Happy toasting 🍾
+
+{% endcomment %}
+
+{% load static %}
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+        <div class="toast-header">
+            <img src="{% static 'assets/logos/logo.png' %}" class="avatar avatar-xs rounded me-2" alt="Indie Cactus Logo" />
+            <strong class="me-auto">Indie Cactus</strong>
+            <small>11 mins ago</small>
+            <i class="bi bi-x-lg text-dark ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <div class="toast-body">Hello, Veer! This is a toast message.</div>
+    </div>
+</div>
+{% comment "Script to trigger the toast" %}
+<button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+
+<script>
+     console.log('initializing toast...');
+
+     const toastTrigger = document.getElementById('liveToastBtn')
+     const toastLiveExample = document.getElementById('liveToast')
+
+     if (toastTrigger) {
+          const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+          toastTrigger.addEventListener('click', () => {
+               toastBootstrap.show()
+          })
+     }
+</script>
+{% endcomment %}
