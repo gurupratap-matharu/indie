@@ -1,6 +1,10 @@
 {% extends "layouts/base.html" %}
 
-{% load static %}
+{% load static i18n %}
+
+{% block title %}
+    {% trans "Get Listed" %}
+{% endblock title %}
 
 {% block content %}
     <header>
@@ -12,10 +16,8 @@
                         <h1 class="mb-4">Experiences</h1>
                         <p class="lead">The time is now for it to be okay to be great. For being a bright color. For standing out.</p>
                         <div class="buttons">
-                            <button type="button" class="btn bg-gradient-warning mt-4">
-                                Sign Up <i class="bi bi-arrow"></i>
-                            </button>
-                            <button type="button" class="btn text-warning shadow-none mt-4">Know More</button>
+                            <button type="button" class="btn bg-gradient-warning mt-4">Sign Up</button>
+                            <a href="{% url 'portal:home' %}" type="button" class="btn btn-outline-dark shadow ms-2 mt-4">Login to Portal</a>
                         </div>
                     </div>
                     <div class="col-lg-8 ps-5 pe-0 d-none d-lg-block">

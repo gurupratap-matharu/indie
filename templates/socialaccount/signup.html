@@ -25,7 +25,7 @@
                             <span class="alert-text">{{ field.errors }}</span>
                         </div>
                         {{ field }}
-                        {{ field.help_text }}
+                        <div class="form-text">{{ field.help_text }}</div>
                     </div>
                 {% endfor %}
                 {% if redirect_field_value %}

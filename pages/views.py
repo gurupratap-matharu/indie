@@ -29,6 +29,10 @@ class HelpPageView(TemplateView):
     template_name = "pages/help.html"
 
 
+class SupportPageView(TemplateView):
+    template_name = "pages/support.html"
+
+
 class TermsPageView(TemplateView):
     template_name: str = "pages/terms.html"
 
