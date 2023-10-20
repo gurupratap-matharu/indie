@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "base.apps.BaseConfig",
     "users.apps.UsersConfig",
     "properties.apps.PropertiesConfig",
+    "portal.apps.PortalConfig",
 ]
 
 MIDDLEWARE = [
@@ -98,8 +99,6 @@ ACCOUNT_USERNAME_REQUIRED = False
 
 LOGIN_REDIRECT_URL = reverse_lazy("pages:home")
 ACCOUNT_ADAPTER = "users.adapter.MyAccountAdapter"
-
-SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
