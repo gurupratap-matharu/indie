@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.facebook",
     "django_extensions",
     "django_countries",
+    "debug_toolbar",
     # Local
     "pages.apps.PagesConfig",
     "base.apps.BaseConfig",
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 INTERNAL_IPS = [
