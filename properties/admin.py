@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from django.contrib import admin
 
 from properties.models import Property, Room
@@ -15,10 +17,10 @@ class RoomInline(admin.StackedInline):
 class PropertyAdmin(admin.ModelAdmin):
     list_display = ("name", "city", "country", "property_type")
     list_filter = ("property_type",)
-    prepopulated_fields = {"slug": ("name",)}
+    prepopulated_fields: ClassVar[dict] = {"slug": ("name",)}
     search_fields = ("name",)
     raw_id_fields = ("owner",)
-    inlines = [RoomInline]
+    inlines: ClassVar[list] = [RoomInline]
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)

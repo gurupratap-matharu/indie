@@ -33,7 +33,7 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ("first_name", "last_name", "bio", "location", "personal_website")
-        widgets = {
+        widgets = {  # noqa: RUF012
             "first_name": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": "First name"}
             ),

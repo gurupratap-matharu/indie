@@ -20,7 +20,7 @@ class Property(models.Model):
     CAMPSITE = "CS"
     APARTMENT = "AP"
 
-    PROPERTY_TYPE_CHOICES = [
+    PROPERTY_TYPE_CHOICES = [  # noqa: RUF012
         (HOSTEL, "Hostel"),
         (HOTEL, "Hotel"),
         (BB, "Bed & Breakfast"),
@@ -69,7 +69,7 @@ class Property(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["-created"]
+        ordering = ["-created"]  # noqa: RUF012
         verbose_name = "property"
         verbose_name_plural = "properties"
 
@@ -78,7 +78,10 @@ class Property(models.Model):
 
     def save(self, *args, **kwargs) -> None:
         if not self.slug:
-            logger.info("slugifying %s:%s..." % (self.name, slugify(self.name)))
+            logger.info(
+                "slugifying {obj}:{slug}",
+                extra={"obj": self.name, "slug": slugify(self.name)},
+            )
             self.slug = slugify(self.name)
 
         return super().save(*args, **kwargs)
@@ -93,7 +96,7 @@ class Room(models.Model):
     DELUXE = "DL"
     SUPERIOR = "SP"
 
-    GRADE_CHOICES = [
+    GRADE_CHOICES = [  # noqa: RUF012
         (BASIC, "Basic"),
         (STANDARD, "Standard"),
         (DELUXE, "Deluxe"),
@@ -110,7 +113,7 @@ class Room(models.Model):
     PRIVATE_TENT = "PT"
     SHARED_TENT = "ST"
 
-    ROOM_TYPE_CHOICES = [
+    ROOM_TYPE_CHOICES = [  # noqa: RUF012
         (MIXED_DORM, "Mixed Dorm"),
         (MALE_DORM, "Male Dorm"),
         (FEMALE_DORM, "Female Dorm"),

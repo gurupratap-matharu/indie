@@ -70,9 +70,9 @@ class RobotsTxtView(TemplateView):
 
 @require_GET
 @cache_control(max_age=60 * 60 * 24, immutable=True, public=True)  # one day
-def favicon(request: HttpRequest) -> FileResponse:
+def favicon(_: HttpRequest) -> FileResponse:
     """
-    You might wonder why you need a separate view, rather than relying on Django’s staticfiles app.
+    You might wonder why you need a separate view, rather than relying on Djangos staticfiles app.
     The reason is that staticfiles only serves files from within the STATIC_URL prefix, like static/.
 
     Thus staticfiles can only serve /static/favicon.ico,

@@ -31,9 +31,10 @@ class AccountSettingsView(LoginRequiredMixin, SuccessMessageMixin, FormView):
     success_message: str = "Profile updated successfully!"
 
     def form_valid(self, form) -> HttpResponse:
-        logger.info("updating profile for: %s " % self.request.user)
         cd = form.cleaned_data
         user = self.request.user
+
+        logger.info("updating profile for: {user}", extra={"user": user})
 
         user.first_name = cd["first_name"]
         user.last_name = cd["last_name"]
@@ -68,8 +69,10 @@ class AccountDeleteView(LoginRequiredMixin, SuccessMessageMixin, FormView):
     success_message: str = "Account deleted successfully!"
 
     def form_valid(self, form) -> HttpResponse:
-        logger.info("deleting user: %s " % self.request.user)
         user = self.request.user
+
+        logger.info("deleting user:{user}", extra=dict(user=user))
+
         logout(self.request)
         user.delete()
 
