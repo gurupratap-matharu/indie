@@ -5,11 +5,12 @@ Disallow: /private/
 Disallow: /account/
 Disallow: /accounts/
 Disallow: /captcha/
-Disallow: /trips/
+Disallow: /portal/
 Disallow: /cart/
 Disallow: /orders/
 Disallow: /payments/
 Disallow: /coupons/
+Disallow: /bookings/
 
 User-agent: GPTBot
 Disallow: /
