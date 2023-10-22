@@ -11,6 +11,7 @@ Disallow: /orders/
 Disallow: /payments/
 Disallow: /coupons/
 Disallow: /bookings/
+Disallow: /properties/
 
 User-agent: GPTBot
 Disallow: /

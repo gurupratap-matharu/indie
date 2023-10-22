@@ -1,0 +1,33 @@
+{% extends "layouts/base-sidebar.html" %}
+
+{% block title %}
+    My Properties
+{% endblock title %}
+
+{% block breadcrumb %}
+    Manage
+{% endblock breadcrumb %}
+
+{% block page_title %}
+    {{ property.name }}
+{% endblock page_title %}
+
+{% block main %}
+    <h1>My properties</h1>
+    <div class="card">
+        <div class="card-body">
+            {% for property in object_list %}
+                <h3>{{ property.name }}</h3>
+                <p>
+                    <a href="{% url "portal:property_update" property.slug %}">Edit</a>
+                    <a href="{% url "portal:property_delete" property.slug %}">Delete</a>
+                </p>
+            {% empty %}
+                <p>You haven't created any properties yet.</p>
+            {% endfor %}
+            <p>
+                <a href="{% url "portal:property_create" %}">Create a new property</a>
+            </p>
+        </div>
+    </div>
+{% endblock main %}

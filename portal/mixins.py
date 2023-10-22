@@ -6,7 +6,7 @@ from properties.models import Property
 class OwnerMixin:
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(owner=self.reqeust.user)
+        return qs.filter(owner=self.request.user)
 
 
 class OwnerEditMixin:
@@ -19,6 +19,7 @@ class OwnerPropertyMixin(OwnerMixin, LoginRequiredMixin, PermissionRequiredMixin
     model = Property
     fields = ("name", "description", "property_type", "website")
     success_url = "/"  # <-- TODO: probably obj.get_absolute_url()
+    # success_url = reverse_lazy("portal:manage_property_list")
 
 
 class OwnerPropertyEditMixin(OwnerPropertyMixin, OwnerEditMixin):

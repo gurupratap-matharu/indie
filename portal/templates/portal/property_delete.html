@@ -1,0 +1,7 @@
+<h1>Delete property</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    {{ form }}
+    <button type="submit">Delete</button>
+</form>
