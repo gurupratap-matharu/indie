@@ -145,7 +145,10 @@ class Room(models.Model):
     )
     description = models.TextField(_("Description"), blank=True)
     weekday_price = models.DecimalField(
-        _("Weekday Price"), max_digits=12, decimal_places=2
+        _("Weekday Price"),
+        max_digits=12,
+        decimal_places=2,
+        validators=[MinValueValidator(1)],
     )
     weekend_price = models.DecimalField(
         _("Weekend Price"),
@@ -160,3 +163,23 @@ class Room(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Addon(models.Model):
+    """
+    An additional item that a property can bill to a traveller.
+    """
+
+    name = models.CharField(_("name"), max_length=64)
+    price = models.DecimalField(
+        _("Price"), max_digits=12, decimal_places=2, validators=[MinValueValidator(1)]
+    )
+    icon = models.CharField(_("icon"), max_length=64, blank=True)
+    active = models.BooleanField(_("active"), default=True)
+
+    class Meta:
+        verbose_name = "addon"
+        verbose_name_plural = "addons"
+
+    def __str__(self):
+        return f"{self.name}: {self.price}"

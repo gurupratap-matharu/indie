@@ -2,7 +2,7 @@ from typing import ClassVar
 
 from django.contrib import admin
 
-from properties.models import Property, Room
+from properties.models import Addon, Property, Room
 
 admin.site.site_header = "Indie Cactus 🌵🏜️"
 admin.site.site_title = "Indie Cactus Portal 🌵🏜️"
@@ -25,3 +25,9 @@ class PropertyAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         return queryset.select_related("owner")
+
+
+@admin.register(Addon)
+class AddonAdmin(admin.ModelAdmin):
+    list_display = ("name", "price", "active")
+    list_editable = ("active",)
