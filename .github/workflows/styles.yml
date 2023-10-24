@@ -45,3 +45,6 @@ jobs:
 
       - name: Run Ruff
         run: poetry run ruff .
+
+      - name: Run djlint
+        run: git ls-files '*.html' | xargs djlint --check
