@@ -17,4 +17,6 @@ urlpatterns = [
     path("feedback/", views.FeedbackPageView.as_view(), name="feedback"),
     path("favicon.ico", views.favicon, name="favicon"),
     path("robots.txt", views.RobotsTxtView.as_view(), name="robots"),
+    path("loading/", views.LoadingPageView.as_view(), name="loading"),
+    path("maintenance/", views.MaintenancePageView.as_view(), name="maintenance"),
 ]

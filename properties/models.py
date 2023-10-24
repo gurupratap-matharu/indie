@@ -87,7 +87,7 @@ class Property(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self) -> str:
-        return reverse_lazy("properties:property_detail", kwargs={"slug": self.slug})
+        return reverse_lazy("properties:property-detail", kwargs={"slug": self.slug})
 
 
 class Room(models.Model):

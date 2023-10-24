@@ -45,6 +45,14 @@ class SiteMapPageView(TemplateView):
     template_name: str = "pages/sitemap.html"
 
 
+class LoadingPageView(TemplateView):
+    template_name: str = "pages/loading.html"
+
+
+class MaintenancePageView(TemplateView):
+    template_name: str = "pages/maintenance.html"
+
+
 class ContactPageView(SuccessMessageMixin, FormView):
     template_name: str = "pages/contact.html"
     form_class = ContactForm

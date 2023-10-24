@@ -19,7 +19,7 @@ class OwnerPropertyMixin(OwnerMixin, LoginRequiredMixin, PermissionRequiredMixin
     model = Property
     fields = ("name", "description", "property_type", "website")
     success_url = "/"  # <-- TODO: probably obj.get_absolute_url()
-    # success_url = reverse_lazy("portal:manage_property_list")
+    # success_url = reverse_lazy("portal:manage-property-list")
 
 
 class OwnerPropertyEditMixin(OwnerPropertyMixin, OwnerEditMixin):

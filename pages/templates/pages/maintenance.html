@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-    My Properties
+    Under Maintenance
 {% endblock title %}
 
 {% block content %}
@@ -42,22 +42,13 @@
                             </div>
                         </div>
                         <div class="text-center text-muted mb-4">
-                            <h2>My Properties</h2>
+                            <h2>Under Maintenance</h2>
                         </div>
                         <div class="text-center">
-                            <ul class="list-group">
-                                {% for property in object_list %}
-                                    <li class="list-group-item px-5 py-3">
-                                        <a href="{% url 'portal:dashboard' property.slug %}">{{ property.name }}</a>
-                                    </li>
-                                {% empty %}
-                                    <h5>You have no properties yet.</h5>
-                                {% endfor %}
-                            </ul>
+                            Sorry for the inconvenience but we’re performing some maintenance at the moment.
+                            <br />
+                            We’ll be back online shortly!
                         </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-center">
-                        <span class="text-muted text-sm">Cant't see your property?<a href="{% url 'pages:contact' %}" class="ms-1 text-primary text-gradient text-bold">Contact us</a>.</span>
                     </div>
                 </div>
             </div>
