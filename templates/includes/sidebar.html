@@ -15,7 +15,8 @@
     <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link active" href="">
+                {% url 'portal:dashboard' property.slug as url_dashboard %}
+                <a class="nav-link {% if request.path == url_dashboard %}active{% endif %}" href="{{ url_dashboard }}">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px"
                              height="12px"
@@ -39,6 +40,22 @@
                         </svg>
                     </div>
                     <span class="nav-link-text ms-1">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                {% url 'portal:calendar' property.slug as url_calendar %}
+                <a class="nav-link {% if request.path == url_calendar %}active text-white{% endif %}" href="{{ url_calendar }}">
+                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="16"
+                             height="16"
+                             fill="currentColor"
+                             class="bi bi-calendar-range-fill"
+                             viewBox="0 0 16 16">
+                            <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 7V5H0v5h5a1 1 0 1 1 0 2H0v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9h-6a1 1 0 1 1 0-2h6z" />
+                        </svg>
+                    </div>
+                    <span class="nav-link-text ms-1 text-dark">Calendar</span>
                 </a>
             </li>
             <li class="nav-item">

@@ -18,6 +18,11 @@ class DashboardView(OwnerPropertyMixin, DetailView):
     permission_required = "properties.view_property"
 
 
+class CalendarView(OwnerPropertyMixin, DetailView):
+    template_name = "portal/calendar.html"
+    permission_required = "properties.view_property"
+
+
 class PropertyCreateView(OwnerPropertyEditMixin, CreateView):
     permission_required = "properties.add_property"
     template_name = "portal/property_create.html"
