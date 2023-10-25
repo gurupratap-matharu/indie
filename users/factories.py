@@ -1,7 +1,10 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 
 import factory
+
+from properties.models import Addon, Property, Room
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -37,6 +40,28 @@ class SuperuserFactory(StaffuserFactory):
     username = factory.Sequence(lambda n: "superuser%d" % n)
 
 
+class PropertyOwnerFactory(UserFactory):
+    """
+    A normal user in our db who is also a property owner which basically
+    means that he/she is added to the OwnerGroup.
+
+    They have permissions to do CRUD only on their own property.
+    """
+
+    @factory.post_generation
+    def groups(self, create, extracted, **kwargs):
+        # By default add this user to the Owner group.
+        owners = OwnerGroupFactory()
+        self.groups.add(owners)
+
+        if not create or not extracted:
+            # Simple build, or nothing to add so do nothing.
+            return
+
+        # Add the iterable of groups using bulk addition
+        self.groups.add(*extracted)
+
+
 class GroupFactory(factory.django.DjangoModelFactory):
     """Generic factory to create groups in a sequence"""
 
@@ -45,3 +70,30 @@ class GroupFactory(factory.django.DjangoModelFactory):
         django_get_or_create = ("name",)
 
     name = factory.Sequence(lambda n: "Group_{0}".format(n))
+
+
+class OwnerGroupFactory(GroupFactory):
+    """
+    A group which represents owners of properties and has permissions to perform CRUD
+    on Property and related models.
+    """
+
+    name = "Owners"
+
+    @factory.post_generation
+    def permissions(self, create, extracted, **kwargs):
+        """
+        Add CRUD permission to this group.
+        """
+
+        content_types = ContentType.objects.get_for_models(Property, Room, Addon)
+        perms = Permission.objects.filter(content_type__in=content_types.values())
+
+        self.permissions.add(*perms)
+
+        if not create or not extracted:
+            # Simple build, or nothing to add so do nothing
+            return
+
+        # Add the iterable of groups using bulk addition
+        self.permissions.add(*extracted)
