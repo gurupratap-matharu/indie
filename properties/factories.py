@@ -6,7 +6,7 @@ from factory import fuzzy
 
 from users.factories import PropertyOwnerFactory
 
-from .models import Property, Room
+from .models import Addon, Property, Room
 
 
 class PropertyFactory(factory.django.DjangoModelFactory):
@@ -59,3 +59,28 @@ class RoomFactory(factory.django.DjangoModelFactory):
     description = factory.Faker("paragraph")
     weekday_price = factory.Faker("random_element", elements=[10, 25, 50, 100])
     weekend_price = factory.LazyAttribute(lambda o: o.weekday_price * 1.2)
+
+
+ADDON_CHOICES = [
+    "towel",
+    "lock",
+    "coffe",
+    "breakfast",
+    "parking",
+    "cleaning",
+    "taxi",
+    "tour",
+]
+
+
+class AddonFactory(factory.django.DjangoModelFactory):
+    """
+    Creates an Addon for a property which we can easily use in tests or to attach to
+    bookings.
+    """
+
+    class Meta:
+        model = Addon
+
+    name = fuzzy.FuzzyChoice(ADDON_CHOICES)
+    price = factory.Faker("random_int", min=1, max=20)

@@ -170,6 +170,10 @@ class Addon(models.Model):
     An additional item that a property can bill to a traveller.
     """
 
+    property = models.ForeignKey(
+        "properties.Property", related_name="addons", on_delete=models.CASCADE
+    )
+
     name = models.CharField(_("name"), max_length=64)
     price = models.DecimalField(
         _("Price"), max_digits=12, decimal_places=2, validators=[MinValueValidator(1)]
