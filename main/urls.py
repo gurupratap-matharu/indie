@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
+from django.views import defaults as default_views
 
 from pages.sitemaps import StaticViewSitemap
 
@@ -15,7 +16,6 @@ urlpatterns = [
     # User management
     path("accounts/", include("allauth.urls")),
     path("account/", include("users.urls")),
-    path("__debug__/", include("debug_toolbar.urls")),
     path("properties/", include("properties.urls")),
     path("portal/", include("portal.urls")),
     path(
@@ -29,12 +29,26 @@ urlpatterns = [
 
 
 if settings.DEBUG:
-    from django.views.generic import TemplateView
-
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     # Add routes to test error templates
     urlpatterns += [
-        path("test403/", TemplateView.as_view(template_name="403.html")),
-        path("test404/", TemplateView.as_view(template_name="404.html")),
-        path("test500/", TemplateView.as_view(template_name="500.html")),
+        path(
+            "400/",
+            default_views.bad_request,
+            kwargs={"exception": Exception("Bad Request!")},
+        ),
+        path(
+            "403/",
+            default_views.permission_denied,
+            kwargs={"exception": Exception("Permission Denied")},
+        ),
+        path(
+            "404/",
+            default_views.page_not_found,
+            kwargs={"exception": Exception("Page not Found")},
+        ),
+        path("500/", default_views.server_error),
     ]
+
+    if "debug_toolbar" in settings.INSTALLED_APPS:
+        urlpatterns = [path("__debug__/", include("debug_toolbar.urls")), *urlpatterns]

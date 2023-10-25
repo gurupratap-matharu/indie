@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path
 
@@ -7,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 import sentry_sdk
 from dotenv import load_dotenv
 from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.logging import LoggingIntegration
 
 load_dotenv()
 
@@ -176,6 +178,7 @@ DATABASES = {
         "PASSWORD": os.getenv("DATABASE_PASSWORD"),
         "HOST": os.getenv("DATABASE_HOST", default="db"),
         "PORT": 5432,
+        "CONN_MAX_AGE": int(os.getenv("CONN_MAX_AGE", default="60")),
     }
 }
 
@@ -238,9 +241,10 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_EMAIL = "'Indie Cactus' <noreply@indiecactus.xyz>"
+DEFAULT_FROM_EMAIL = "'IndieCactus' <noreply@indiecactus.xyz>"
 DEFAULT_TO_EMAIL = "gurupratap.matharu@gmail.com"
-SERVER_EMAIL = "server@indiecactus.xyz"
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+EMAIL_SUBJECT_PREFIX = "[IndieCactus] "
 RECIPIENT_LIST = ["gurupratap.matharu@gmail.com", "veerplaying@gmail.com"]
 ADMINS = [
     ("Gurupratap", "gurupratap.matharu@gmail.com"),
@@ -326,15 +330,26 @@ if not DEBUG:
     X_FRAME_OPTIONS = "DENY"
 
     # Sentry
+
+    SENTRY_LOG_LEVEL = os.getenv("DJANGO_SENTRY_LOG_LEVEL", logging.INFO)
+
+    sentry_logging = LoggingIntegration(
+        level=SENTRY_LOG_LEVEL,  # Capture info and above as breadcrumbs
+        event_level=logging.ERROR,  # Send errors as events
+    )
+    integrations = [
+        sentry_logging,
+        DjangoIntegration(),
+        # CeleryIntegration(),
+        # RedisIntegration(),
+    ]
+
     sentry_sdk.init(
         dsn=os.getenv("SENTRY_DSN"),
-        integrations=[DjangoIntegration()],
+        integrations=integrations,
         environment="production",
         # Set traces_sample_rate to 1.0 to capture 100%
         # of transactions for performance monitoring.
         # We recommend adjusting this value in production.
         traces_sample_rate=0.1,
-        # If you wish to associate users to errors (assuming you are using
-        # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True,
     )
