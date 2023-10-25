@@ -297,7 +297,9 @@ LOGGING = {
 SHELL_PLUS_IMPORTS = [
     "import json",
     "from datetime import datetime, timedelta",
-    "from users.factories import UserFactory, StaffuserFactory, SuperuserFactory",
+    "from users.factories import UserFactory, StaffuserFactory, SuperuserFactory, PropertyOwnerFactory",
+    "from users.factories import OwnerGroupFactory",
+    "from properties.factories import PropertyFactory, RoomFactory, AddonFactory",
 ]
 
 # Mercado pago

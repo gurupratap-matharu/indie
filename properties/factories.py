@@ -7,6 +7,7 @@ from factory import fuzzy
 from users.factories import PropertyOwnerFactory
 
 from .models import Addon, Property, Room
+from .samples import ROOM_SAMPLES
 
 
 class PropertyFactory(factory.django.DjangoModelFactory):
@@ -51,14 +52,25 @@ class RoomFactory(factory.django.DjangoModelFactory):
 
     property = factory.SubFactory(PropertyFactory)
 
-    name = factory.Sequence(lambda n: "Room %02d" % n)
-    grade = fuzzy.FuzzyChoice(Room.GRADE_CHOICES, getter=lambda c: c[0])
-    num_of_guests = factory.Faker("random_int", min=1, max=20)
-    room_type = fuzzy.FuzzyChoice(Room.ROOM_TYPE_CHOICES, getter=lambda c: c[0])
+    name = fuzzy.FuzzyChoice(list(ROOM_SAMPLES))
+    # grade = fuzzy.FuzzyChoice(Room.GRADE_CHOICES, getter=lambda c: c[0])
+    # num_of_guests = factory.Faker("random_int", min=1, max=20)
+    # room_type = fuzzy.FuzzyChoice(Room.ROOM_TYPE_CHOICES, getter=lambda c: c[0])
+    # weekday_price = factory.Faker("random_element", elements=[10, 25, 50, 100])
+    # weekend_price = factory.LazyAttribute(lambda o: o.weekday_price * 1.2)
+    grade = factory.LazyAttribute(lambda o: ROOM_SAMPLES[o.name]["grade"])
+    num_of_guests = factory.LazyAttribute(
+        lambda o: ROOM_SAMPLES[o.name]["num_of_guests"]
+    )
+    room_type = factory.LazyAttribute(lambda o: ROOM_SAMPLES[o.name]["room_type"])
     ensuite = factory.Faker("boolean")
-    description = factory.Faker("paragraph")
-    weekday_price = factory.Faker("random_element", elements=[10, 25, 50, 100])
-    weekend_price = factory.LazyAttribute(lambda o: o.weekday_price * 1.2)
+    description = factory.LazyAttribute(lambda o: ROOM_SAMPLES[o.name]["description"])
+    weekday_price = factory.LazyAttribute(
+        lambda o: ROOM_SAMPLES[o.name]["weekday_price"]
+    )
+    weekend_price = factory.LazyAttribute(
+        lambda o: ROOM_SAMPLES[o.name]["weekend_price"]
+    )
 
 
 ADDON_CHOICES = [

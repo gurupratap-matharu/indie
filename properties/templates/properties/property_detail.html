@@ -66,11 +66,13 @@
                                  class="card-img-top border-radius-xl shadow-xl"
                                  alt="{{ room.name }}" />
                             <div class="card-body px-1 pt-3">
-                                <p class="text-gradient text-dark mb-2 text-sm">Entire Apartment • 3 Guests • 2 Beds</p>
+                                <p class="text-gradient text-dark mb-2 text-sm">
+                                    {{ room.get_room_type_display }} • {{ room.num_of_guests }} Guests • {{ room.get_grade_display }}
+                                </p>
                                 <a href="javascript:;">
                                     <h5 class="card-title">{{ room.name }}</h5>
                                 </a>
-                                <p class="card-text">{{ room.description }}</p>
+                                <p class="card-text">{{ room.description|truncatechars:120 }}</p>
                             </div>
                             <div class="card-footer d-flex justify-content-end">
                                 <button type="button" class="btn btn-outline-primary btn-sm">From {{ room.weekday_price }}/ Night</button>
