@@ -6,7 +6,7 @@ from factory import fuzzy
 
 from users.factories import PropertyOwnerFactory
 
-from .models import Property
+from .models import Property, Room
 
 
 class PropertyFactory(factory.django.DjangoModelFactory):
@@ -39,3 +39,23 @@ class PropertyFactory(factory.django.DjangoModelFactory):
 
     legal_entity = factory.Faker("isbn13")
     tax_id = factory.Faker("isbn10")
+
+
+class RoomFactory(factory.django.DjangoModelFactory):
+    """
+    Creates amazing room objects for any property
+    """
+
+    class Meta:
+        model = Room
+
+    property = factory.SubFactory(PropertyFactory)
+
+    name = factory.Sequence(lambda n: "Room %02d" % n)
+    grade = fuzzy.FuzzyChoice(Room.GRADE_CHOICES, getter=lambda c: c[0])
+    num_of_guests = factory.Faker("random_int", min=1, max=20)
+    room_type = fuzzy.FuzzyChoice(Room.ROOM_TYPE_CHOICES, getter=lambda c: c[0])
+    ensuite = factory.Faker("boolean")
+    description = factory.Faker("paragraph")
+    weekday_price = factory.Faker("random_element", elements=[10, 25, 50, 100])
+    weekend_price = factory.LazyAttribute(lambda o: o.weekday_price * 1.2)
