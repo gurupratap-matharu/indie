@@ -81,6 +81,7 @@ class AddonFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Addon
+        django_get_or_create = ("name",)
 
     name = fuzzy.FuzzyChoice(ADDON_CHOICES)
     price = factory.Faker("random_int", min=1, max=20)

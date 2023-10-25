@@ -13,6 +13,10 @@ class RoomInline(admin.StackedInline):
     model = Room
 
 
+class AddonInline(admin.TabularInline):
+    model = Addon
+
+
 @admin.register(Property)
 class PropertyAdmin(admin.ModelAdmin):
     list_display = ("name", "city", "country", "property_type")
@@ -20,14 +24,10 @@ class PropertyAdmin(admin.ModelAdmin):
     prepopulated_fields: ClassVar[dict] = {"slug": ("name",)}
     search_fields = ("name",)
     raw_id_fields = ("owner",)
-    inlines: ClassVar[list] = [RoomInline]
+    inlines: ClassVar[list] = [RoomInline, AddonInline]
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        return queryset.select_related("owner")
-
-
-@admin.register(Addon)
-class AddonAdmin(admin.ModelAdmin):
-    list_display = ("name", "price", "active")
-    list_editable = ("active",)
+        return queryset.select_related(
+            "owner",
+        )
