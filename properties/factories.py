@@ -4,6 +4,8 @@ import factory
 from django_countries import countries
 from factory import fuzzy
 
+from users.factories import PropertyOwnerFactory
+
 from .models import Property
 
 
@@ -16,6 +18,7 @@ class PropertyFactory(factory.django.DjangoModelFactory):
         model = Property
         django_get_or_create = ("slug",)
 
+    owner = factory.SubFactory(PropertyOwnerFactory)
     name = factory.Faker("company")
     slug = factory.LazyAttribute(lambda o: slugify(o.name))
     description = factory.Faker("paragraph")
