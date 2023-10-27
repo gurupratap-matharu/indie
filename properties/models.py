@@ -10,8 +10,6 @@ from django.utils.translation import gettext_lazy as _
 
 from django_countries.fields import CountryField
 
-from .managers import PropertyActiveManager
-
 logger = logging.getLogger(__name__)
 
 
@@ -72,9 +70,6 @@ class Property(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
-    # objects = models.Manager()
-    # active = PropertyActiveManager()
 
     class Meta:
         ordering = ["-created"]  # noqa: RUF012
