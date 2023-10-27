@@ -783,6 +783,20 @@ files = [
 traitlets = "*"
 
 [[package]]
+name = "mercadopago"
+version = "2.2.1"
+description = "Mercadopago SDK module for Payments integration"
+optional = false
+python-versions = ">=3"
+files = [
+    {file = "mercadopago-2.2.1-py3-none-any.whl", hash = "sha256:18a7bfa71a3f284215e73cb2ad20085e4fa8cb8a7238ada9bf26133bf1b2ba0b"},
+    {file = "mercadopago-2.2.1.tar.gz", hash = "sha256:8d16c5f2856608ada4f9c6b6f0729f07c5c4d5f4c1ce11fe504e9060228bd725"},
+]
+
+[package.dependencies]
+requests = "*"
+
+[[package]]
 name = "mypy"
 version = "1.6.1"
 description = "Optional static typing for Python"
@@ -1552,4 +1566,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11"
-content-hash = "0237aea5b0d06fdc4be5020337b2295e797d61e777faaf9f774aec07c99c68c7"
+content-hash = "6fab7376bd1a63ccafb68dbbadd384a5cba965b2055a3aaa6d7d3d3d96383a75"
