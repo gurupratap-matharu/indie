@@ -10,6 +10,8 @@ from django.utils.translation import gettext_lazy as _
 
 from django_countries.fields import CountryField
 
+from .managers import PropertyActiveManager
+
 logger = logging.getLogger(__name__)
 
 
@@ -37,6 +39,7 @@ class Property(models.Model):
     )
     name = models.CharField(_("name"), max_length=200)
     slug = models.SlugField(_("slug"), max_length=200, unique=True)
+    # cover = models.ImageField(upload_to="properties/%Y/%m/%d", blank=True)
     description = models.TextField(_("description"), blank=True)
 
     property_type = models.CharField(
@@ -65,8 +68,13 @@ class Property(models.Model):
     legal_entity = models.CharField(_("Legal Entity"), max_length=200, blank=True)
     tax_id = models.CharField(_("Tax ID"), max_length=200, blank=True)
 
+    active = models.BooleanField(_("Active"), default=True)
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    # objects = models.Manager()
+    # active = PropertyActiveManager()
 
     class Meta:
         ordering = ["-created"]  # noqa: RUF012
@@ -88,6 +96,9 @@ class Property(models.Model):
 
     def get_absolute_url(self) -> str:
         return reverse_lazy("properties:property-detail", kwargs={"slug": self.slug})
+
+    def get_portal_url(self) -> str:
+        return reverse_lazy("portal:dashboard", kwargs={"slug": self.slug})
 
 
 class Room(models.Model):
@@ -129,6 +140,7 @@ class Room(models.Model):
         "properties.Property", related_name="rooms", on_delete=models.CASCADE
     )
     name = models.CharField(_("Name"), blank=True, max_length=64)
+    # cover = models.ImageField(upload_to="rooms/%Y/%m/%d", blank=True)
     grade = models.CharField(
         _("Grade"), max_length=3, choices=GRADE_CHOICES, default=STANDARD
     )
@@ -156,6 +168,7 @@ class Room(models.Model):
         decimal_places=2,
         validators=[MinValueValidator(1)],
     )
+    active = models.BooleanField(_("Active"), default=True)
 
     class Meta:
         verbose_name = "room"

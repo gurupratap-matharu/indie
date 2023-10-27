@@ -72,10 +72,14 @@
                                 <a href="javascript:;">
                                     <h5 class="card-title">{{ room.name }}</h5>
                                 </a>
-                                <p class="card-text">{{ room.description|truncatechars:120 }}</p>
+                                <p class="card-text">{{ room.description|linebreaks|truncatechars:120 }}</p>
                             </div>
                             <div class="card-footer d-flex justify-content-end">
-                                <button type="button" class="btn btn-outline-primary btn-sm">From {{ room.weekday_price }}/ Night</button>
+                                <form action="{% url "cart:cart-add" room.id %}" method="post">
+                                    {% csrf_token %}
+                                    {{ cart_add_form.quantity }}
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">From {{ room.weekday_price }} / Night</button>
+                                </form>
                             </div>
                         </div>
                     </div>

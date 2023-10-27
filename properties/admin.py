@@ -19,8 +19,8 @@ class AddonInline(admin.TabularInline):
 
 @admin.register(Property)
 class PropertyAdmin(admin.ModelAdmin):
-    list_display = ("name", "city", "country", "property_type")
-    list_filter = ("property_type",)
+    list_display = ("name", "city", "country", "property_type", "active")
+    list_filter = ("property_type", "active")
     prepopulated_fields: ClassVar[dict] = {"slug": ("name",)}
     search_fields = ("name",)
     raw_id_fields = ("owner",)
