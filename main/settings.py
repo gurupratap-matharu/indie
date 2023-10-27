@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # Local
     "pages.apps.PagesConfig",
     "base.apps.BaseConfig",
+    "cart.apps.CartConfig",
     "users.apps.UsersConfig",
     "properties.apps.PropertiesConfig",
     "portal.apps.PortalConfig",
@@ -77,6 +78,8 @@ INTERNAL_IPS = [
 
 SITE_ID = 1
 ROOT_URLCONF = "main.urls"
+
+CART_SESSION_ID = "cart"
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -267,27 +270,26 @@ LOGGING = {
         "verbose": {
             "format": "[%(asctime)s][%(process)d][%(levelname)s][%(name)s] %(message)s"
         },
+        "elegant": {
+            "format": ("%(levelname)-8s" "(%(module)s:%(lineno)d) %(message)s"),
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
     },
     "handlers": {
         "console": {
-            "level": "INFO",
+            "level": "DEBUG",
             "class": "logging.StreamHandler",
-            "formatter": "verbose",
+            "formatter": "elegant",
         },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+        "formatter": "elegant",
     },
     "loggers": {
         "django": {
             "level": "INFO",
-            "handlers": ["console"],
-            "propagate": False,
-        },
-        "django.request": {
-            "level": "WARNING",
-            "handlers": ["console"],
-            "propagate": False,
-        },
-        "django.security": {
-            "level": "WARNING",
             "handlers": ["console"],
             "propagate": False,
         },
