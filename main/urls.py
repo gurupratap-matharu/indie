@@ -18,6 +18,7 @@ urlpatterns = [
     path("account/", include("users.urls")),
     path("properties/", include("properties.urls")),
     path("cart/", include("cart.urls")),
+    path("bookings/", include("bookings.urls")),
     path("portal/", include("portal.urls")),
     path(
         "sitemap.xml",

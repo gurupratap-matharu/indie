@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "properties.apps.PropertiesConfig",
     "portal.apps.PortalConfig",
+    "bookings.apps.BookingsConfig",
 ]
 
 MIDDLEWARE = [
