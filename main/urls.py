@@ -20,6 +20,7 @@ urlpatterns = [
     path("cart/", include("cart.urls")),
     path("bookings/", include("bookings.urls")),
     path("portal/", include("portal.urls")),
+    path("payments/", include("payments.urls")),
     path(
         "sitemap.xml",
         sitemap,

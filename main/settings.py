@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "properties.apps.PropertiesConfig",
     "portal.apps.PortalConfig",
     "bookings.apps.BookingsConfig",
+    "payments.apps.PaymentsConfig",
 ]
 
 MIDDLEWARE = [
