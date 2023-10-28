@@ -27,6 +27,7 @@ class BookingCreateView(FormView):
 
         cart = Cart(self.request)
         booking = form.save()
+        booking_id = str(booking.id)
 
         for item in cart:
             logger.info("creating BookingItem:{item}", extra={"item": item})
@@ -39,6 +40,8 @@ class BookingCreateView(FormView):
             )
 
         cart.clear()
-        form.send_mail()
+
+        form.send_mail(booking_id=booking_id)
+        self.request.session["booking"] = booking_id
 
         return super().form_valid(form)
