@@ -11,7 +11,6 @@ class BookingItemInline(admin.TabularInline):
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = (
-        "id",
         "first_name",
         "last_name",
         "email",
@@ -20,4 +19,5 @@ class BookingAdmin(admin.ModelAdmin):
         "created",
     )
     list_filter = ("paid", "created")
+    search_fields = ("email",)
     inlines = (BookingItemInline,)
