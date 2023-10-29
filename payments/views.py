@@ -199,7 +199,11 @@ def mercadopago_success(request):
     if (status == "approved") and booking_id:
         logger.info("mercadopago(🤝) payment successful!!!")
         # TODO: SEND RESERVATION VIA EMAIL
-        # order_confirmed(order_id=order_id, payment_id=payment_id)
+        # booking_confirmed(order_id=order_id, payment_id=payment_id)
 
-    # TODO:if no get params are passed should we still redirect to success??
-    return redirect(reverse_lazy("payments:success"))
+        # TODO:if no get params are passed should we still redirect to success??
+
+        return redirect(reverse_lazy("payments:success"))
+
+    # Mercadopago payment has failed
+    return redirect(reverse_lazy("payments:fail"))
