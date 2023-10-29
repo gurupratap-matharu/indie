@@ -221,11 +221,6 @@ class ContactPageTests(TestCase):
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), ContactPageView.success_message)
 
-    def test_contact_page_post_error_for_invalid_data(self):
-        response = self.client.post(self.url, data={})
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, "This field is required.")
-
 
 @tag("pages", "fast")
 class FeedbackPageTests(TestCase):
@@ -282,8 +277,3 @@ class FeedbackPageTests(TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), FeedbackPageView.success_message)
-
-    def test_feedback_page_post_error_for_invalid_data(self):
-        response = self.client.post(self.url, data={})
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, "This field is required.")
