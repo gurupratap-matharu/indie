@@ -64,14 +64,14 @@ class PaymentView(TemplateView):
         )  # <-- Minimizing this for MP
 
         picture_url = uri(static("assets/logos/logo.png"))
-        success = uri(reverse_lazy("payments:mercadopago_success"))
+        success = uri(reverse_lazy("payments:mercadopago-success"))
         failure = uri(reverse_lazy("payments:fail"))
-        # pending = uri(reverse_lazy("payments:pending"))
-        notification_url = uri(reverse_lazy("payments:mercadopago_webhook"))
+        pending = uri(reverse_lazy("payments:pending"))
+        notification_url = uri(reverse_lazy("payments:mercadopago-webhook"))
 
         logger.info("success: %s", success)
         logger.info("failure: %s", failure)
-        # logger.info("pending: %s", pending)
+        logger.info("pending: %s", pending)
         logger.info("picture_url: %s", picture_url)
         logger.info("notification_url: %s", notification_url)
         logger.info("unit price: %s", unit_price)
@@ -144,6 +144,10 @@ class PaymentSuccessView(TemplateView):
             pass
 
         return context
+
+
+class PaymentPendingView(TemplateView):
+    template_name: str = "payments/payment_pending.html"
 
 
 class PaymentFailView(TemplateView):
