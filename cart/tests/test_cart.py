@@ -3,9 +3,10 @@ from decimal import Decimal
 from django.test import RequestFactory, TestCase
 from django.urls import reverse_lazy
 
-from cart.cart import Cart, CartException
 from coupons.factories import CouponFactory
 from trips.factories import TripFactory
+
+from cart.cart import Cart, CartException
 
 
 class SessionDict(dict):
@@ -131,7 +132,6 @@ class CartTests(TestCase):
         self.assertEqual(len(cart.cart), 1)
 
     def test_user_can_add_maximum_two_trips_to_cart(self):
-
         cart = Cart(self.request)
         # Cart already has two trips. Let's try adding another one
         trip = TripFactory()

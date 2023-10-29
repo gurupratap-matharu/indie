@@ -57,17 +57,17 @@ class ProfileEditTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
     def test_profile_edit_view_works_for_logged_in_user(self):
-        self.client.force_login(self.user)  # type:ignore
+        self.client.force_login(self.user)
 
         response = self.client.get(self.url)
 
-        self.assertTemplateUsed(response, "users/profile_edit.html")
+        self.assertTemplateUsed(response, "users/settings.html")
         self.assertContains(response, "Edit Profile")
         self.assertContains(response, "First name")
         self.assertContains(response, "Last name")
         self.assertContains(response, "Bio")
         self.assertContains(response, "Location")
-        self.assertContains(response, "Personal website")
+        self.assertContains(response, "Website")
         self.assertNotContains(response, "Hi I should not be on this page!")
 
     def test_profile_edit_resolves_profileeditview(self):

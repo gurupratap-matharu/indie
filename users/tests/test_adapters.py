@@ -2,11 +2,10 @@ from django.conf import settings
 from django.test import RequestFactory, TestCase
 from django.urls import reverse_lazy
 
-from companies.factories import CompanyFactory
-
+from properties.factories import PropertyFactory
 from users.adapter import MyAccountAdapter
 from users.factories import (
-    CompanyOwnerFactory,
+    PropertyOwnerFactory,
     StaffuserFactory,
     SuperuserFactory,
     UserFactory,
@@ -20,16 +19,16 @@ class AdapterTests(TestCase):
 
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.owner = CompanyOwnerFactory()
+        cls.owner = PropertyOwnerFactory()
         cls.super_user = SuperuserFactory()
         cls.staff_user = StaffuserFactory()
         cls.user = UserFactory()
 
-        cls.company = CompanyFactory(owner=cls.owner)
+        cls.property = PropertyFactory(owner=cls.owner)
         cls.url = reverse_lazy("account_login")
         cls.adapter = MyAccountAdapter()
 
-    def test_company_owner_is_redirected_to_respective_admin(self):
+    def test_property_owner_is_redirected_to_respective_portal(self):
         # Create a django request with company owner
         request = RequestFactory().get(self.url)
         request.user = self.owner

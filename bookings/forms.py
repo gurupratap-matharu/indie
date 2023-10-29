@@ -57,7 +57,7 @@ class BookingForm(forms.ModelForm):
         )
 
         logger.info("sending booking email...")
-        
+
         return send_mail(
             subject=subject,
             message=message,
