@@ -137,7 +137,7 @@ class PaymentSuccessView(TemplateView):
         context["booking_id"] = self.request.session.get("booking")
 
         # next since booking is confirmed we remove it from the session
-        try:
+        try:  # noqa
             del self.request.session["booking"]
         except KeyError:
             # TODO: technically here veer you should redirect as its not a valid case!
@@ -197,5 +197,5 @@ def mercadopago_success(request):
         # TODO: SEND RESERVATION VIA EMAIL
         # order_confirmed(order_id=order_id, payment_id=payment_id)
 
-    # TODO:if not get params are passed should we still redirect to success??
+    # TODO:if no get params are passed should we still redirect to success??
     return redirect(reverse_lazy("payments:success"))

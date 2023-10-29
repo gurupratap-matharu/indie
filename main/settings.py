@@ -309,8 +309,7 @@ SHELL_PLUS_IMPORTS = [
 # Mercado pago
 MP_PUBLIC_KEY = os.getenv("MP_PUBLIC_KEY")
 MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN")
-MP_CLIENT_ID = os.getenv("MP_CLIENT_ID")
-MP_CLIENT_SECRET = os.getenv("MP_CLIENT_SECRET")
+
 
 # MAIL PIT
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
