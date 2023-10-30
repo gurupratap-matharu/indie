@@ -246,7 +246,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_EMAIL = "'IndieCactus' <noreply@indiecactus.xyz>"
+DEFAULT_FROM_EMAIL = "IndieCactus <noreply@indiecactus.xyz>"
 DEFAULT_TO_EMAIL = "gurupratap.matharu@gmail.com"
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 EMAIL_SUBJECT_PREFIX = "[IndieCactus] "
@@ -255,6 +255,7 @@ ADMINS = [
     ("Gurupratap", "gurupratap.matharu@gmail.com"),
     ("Veer", "veerplaying@gmail.com"),
 ]
+BOOKING_EMAIL = "IndieCactus <bookings@indiecactus.xyz>"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
