@@ -17,21 +17,21 @@
                                 <div class="card-header pb-0 text-left bg-transparent">
                                     {% if process == "connect" %}
                                         <h3 class="font-weight-bolder text-primary text-gradient">
-                                            {% blocktrans with provider.name as provider %}Connect
-                          {{ provider }}{% endblocktrans %}
+                                            {% blocktranslate with provider.name as provider %}Connect
+                          {{ provider }}{% endblocktranslate %}
                                         </h3>
                                         <p>
-                                            {% blocktrans with provider.name as provider %}You are about to connect a new third party account from
-                          {{ provider }}.{% endblocktrans %}
+                                            {% blocktranslate with provider.name as provider %}You are about to connect a new third party account from
+                          {{ provider }}.{% endblocktranslate %}
                                         </p>
                                     {% else %}
                                         <h3 class="font-weight-bolder text-primary text-gradient">
-                                            {% blocktrans with provider.name as provider %}Sign In Via
-                          {{ provider }}{% endblocktrans %}
+                                            {% blocktranslate with provider.name as provider %}Sign In Via
+                          {{ provider }}{% endblocktranslate %}
                                         </h3>
                                         <p>
-                                            {% blocktrans with provider.name as provider %}You are about to sign in using a third party account from
-                          {{ provider }}.{% endblocktrans %}
+                                            {% blocktranslate with provider.name as provider %}You are about to sign in using a third party account from
+                          {{ provider }}.{% endblocktranslate %}
                                         </p>
                                     {% endif %}
                                 </div>

@@ -11,9 +11,9 @@
         <div class="card-header pb-0 text-left bg-transparent">
             <h3 class="font-weight-bolder text-primary text-gradient">{% trans "Sign Up" %}</h3>
             <p>
-                {% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your
-      {{provider_name}} account to login to
-      {{site_name}}.{% endblocktrans %}
+                {% blocktranslate with provider_name=account.get_provider.name site_name=site.name %}
+                You are about to use your {{ provider_name }} account to login to {{ site_name }}.
+                {% endblocktranslate %}
             </p>
         </div>
         <div class="card-body">

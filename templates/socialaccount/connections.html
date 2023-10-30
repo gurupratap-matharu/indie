@@ -18,9 +18,9 @@
                                     <h3 class="font-weight-bolder text-primary text-gradient">{% trans "Account Connections" %}</h3>
                                     {% if form.accounts %}
                                         <p>
-                                            {% blocktrans %}
+                                            {% blocktranslate %}
                                         You can sign in to your account using any of the following third party accounts
-                                        {% endblocktrans %}
+                                        {% endblocktranslate %}
                                         </p>
                                         <form method="post" action="{% url 'socialaccount_connections' %}">
                                             {% csrf_token %}
