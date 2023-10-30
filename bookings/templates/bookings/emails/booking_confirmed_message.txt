@@ -1,0 +1,14 @@
+{% extends "bookings/emails/base_message.txt" %}
+
+{% load i18n %}
+
+{% block content %}
+
+{% blocktranslate with name=booking.first_name booking_id=booking.id %}
+Thanks for your booking {{ name }}.
+
+Pack you bags! Your booking is confirmed.
+Your booking ID is {{ booking_id }}
+{% endblocktranslate %}
+
+{% endblock content %}
