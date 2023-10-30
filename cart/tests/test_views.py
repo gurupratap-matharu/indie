@@ -4,17 +4,14 @@ from django.contrib.messages import get_messages
 from django.test import TestCase
 from django.urls import resolve, reverse_lazy
 
-from coupons.forms import CouponApplyForm
-from trips.factories import TripFactory
-from trips.models import Trip
-
 from cart.views import cart_detail, cart_remove
+from properties.factories import RoomFactory
 
 
 class CartDetailViewTests(TestCase):
     """Test suite for cart detail"""
 
-    url = reverse_lazy("cart:cart_detail")
+    url = reverse_lazy("cart:cart-detail")
     template_name = "cart/cart_detail.html"
 
     def test_cart_detail_view_works(self):
@@ -30,26 +27,20 @@ class CartDetailViewTests(TestCase):
 
         self.assertEqual(view.func.__name__, cart_detail.__name__)
 
-    def test_cart_detail_renders_coupon_apply_form(self):
-        response = self.client.get(self.url)
-        form = response.context["coupon_apply_form"]
-
-        self.assertIsInstance(form, CouponApplyForm)
-
 
 class CartAddTests(TestCase):
-    """Test suite to verify adding a trip to cart works"""
+    """Test suite to verify adding a product to cart works"""
 
     def setUp(self):
-        self.trip = TripFactory()
-        self.url = self.trip.get_add_to_cart_url()  # type:ignore
+        self.product = RoomFactory()
+        self.url = reverse_lazy("cart:cart-add", kwargs={"id": self.product.id})
         self.failure_msg = "Oops! Perhaps your session expired. Please search again."
 
     def test_add_to_cart_only_accepts_post_request(self):
         response = self.client.get(self.url)  # try GET
         self.assertEqual(response.status_code, HTTPStatus.METHOD_NOT_ALLOWED)
 
-    def test_adding_a_trip_to_cart_works(self):
+    def test_adding_a_product_to_cart_works(self):
         # First we build a valid search query and add it to the session
         session = self.client.session
         session["q"] = {
