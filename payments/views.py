@@ -106,7 +106,7 @@ class PaymentView(TemplateView):
             "back_urls": {
                 "success": success,
                 "failure": failure,
-                # "pending": pending,
+                "pending": pending,
             },
             "payment_methods": {
                 "excluded_payment_methods": [],
