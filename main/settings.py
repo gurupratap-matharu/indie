@@ -305,6 +305,7 @@ SHELL_PLUS_IMPORTS = [
     "from users.factories import UserFactory, StaffuserFactory, SuperuserFactory, PropertyOwnerFactory",
     "from users.factories import OwnerGroupFactory",
     "from properties.factories import PropertyFactory, RoomFactory, AddonFactory",
+    "from bookings.factories import BookingFactory, BookingItemFactory, BookingConfirmedFactory",
 ]
 
 # Mercado pago
