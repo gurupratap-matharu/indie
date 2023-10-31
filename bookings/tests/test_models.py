@@ -1,3 +1,4 @@
+import uuid
 from decimal import Decimal
 
 from django.core.exceptions import ValidationError
@@ -32,9 +33,6 @@ class BookingModelTests(TestCase):
     def test_verbose_names(self):
         self.assertEqual(str(self.booking._meta.verbose_name), "Booking")
         self.assertEqual(str(self.booking._meta.verbose_name_plural), "Bookings")
-
-    def test_get_absolute_url(self):
-        self.fail("Yet to be implemented in code")
 
     def test_booking_model_creation_is_accurate(self):
         booking_from_db = Booking.objects.first()
@@ -82,13 +80,30 @@ class BookingModelTests(TestCase):
         self.assertEqual(expected, actual)
 
     def test_a_new_booking_has_zero_discount(self):
-        self.assertEqual(self.booking.get_discount(), Decimal(0))
+        self.assertEqual(self.booking.discount, Decimal(0))
 
     def test_a_new_booking_is_unpaid(self):
         self.assertFalse(self.booking.paid)
 
-    def test_confirming_an_order_works_accurately(self):
-        self.fail("yet to be implemented")
+    def test_confirm_booking_works_correctly(self):
+        """
+        Main method where we try to confirm a booking when we get confirmation of
+        payment from the webhook.
+
+        It should mark the order as paid
+        It should add the transaction id field
+        """
+
+        booking = BookingFactory()
+        self.assertFalse(booking.paid)
+        self.assertEqual(booking.payment_id, "")
+
+        payment_id = uuid.uuid4()
+        booking.confirm(payment_id=payment_id)
+
+        self.assertTrue(booking.paid)
+        self.assertIsNotNone(booking.payment_id)
+        self.assertEqual(booking.payment_id, payment_id)
 
 
 class BookingItemModelTests(TestCase):

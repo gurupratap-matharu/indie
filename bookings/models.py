@@ -1,6 +1,7 @@
 import logging
 import uuid
 
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -48,6 +49,28 @@ class Booking(models.Model):
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
+
+    def confirm(self, payment_id):
+        """
+        Mark the booking as paid
+        Link the payment transaction id with the booking
+        """
+
+        if not payment_id:
+            error_msg = "%(booking)s cannot be confirmed without a payment id"
+            raise ValidationError(
+                error_msg,
+                params={"booking": self},
+                code="invalid",
+            )
+
+        logger.info("confirming %s" % self)
+
+        self.paid = True
+        self.payment_id = payment_id
+        self.save()
+
+        return self
 
 
 class BookingItem(models.Model):
