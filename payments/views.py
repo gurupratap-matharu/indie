@@ -211,7 +211,7 @@ def mercadopago_success(request):
 
         # Send confirmation emails
         booking_confirmed(booking_id=booking_id)
-        messages.success("Payment Successful 🎉")
+        messages.success(request, "Payment Successful 🎉")
 
         return redirect(reverse_lazy("payments:success"))
 
