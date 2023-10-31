@@ -69,7 +69,7 @@ class BookingFormTests(SimpleTestCase):
         )
 
         self.assertTrue(form.is_valid())  # trigger the clean
-        
+
         self.assertEqual(form.cleaned_data["first_name"], "Romina")
         self.assertEqual(form.cleaned_data["last_name"], "Pistolesi")
         self.assertEqual(form.cleaned_data["email"], "romi@email.com")

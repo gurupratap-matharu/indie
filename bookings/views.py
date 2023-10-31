@@ -1,6 +1,9 @@
 import logging
 from typing import Any
 
+from django.contrib import messages
+from django.http import HttpRequest
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 
@@ -16,6 +19,21 @@ class BookingCreateView(FormView):
     form_class = BookingForm
     template_name = "bookings/booking_form.html"
     success_url = reverse_lazy("payments:home")
+    redirect_message = "Your session has expired. Please search again 🙏"
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any):
+        """
+        If session or cart is empty then redirect user to home
+        # TODO: check for search query in session
+        """
+
+        # q = request.session.get("q")
+        cart = request.session.get("cart")
+
+        if not cart:
+            messages.info(request, self.redirect_message)
+            return redirect("pages:home")
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
