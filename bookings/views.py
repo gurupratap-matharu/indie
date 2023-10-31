@@ -59,7 +59,7 @@ class BookingCreateView(FormView):
 
         cart.clear()
 
-        form.send_mail(booking_id=booking_id)
+        # form.send_mail(booking_id=booking_id)
         self.request.session["booking"] = booking_id
 
         return super().form_valid(form)

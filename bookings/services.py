@@ -61,7 +61,9 @@ def booking_created(booking_id):
 
 def booking_confirmed(booking_id):
     """
-    Send confirmation email to traveller when a booking is successfully confirmed via webhook.
+    When we receive payment confirmation via webhook we
+        - Send confirmation email to traveller
+        - Send notification email to property.
     """
 
     start = timer()
@@ -71,6 +73,7 @@ def booking_confirmed(booking_id):
     )
     context = {"booking": booking, "current_site": current_site}
 
+    # User Email
     subject_path = "bookings/emails/booking_confirmed_subject.txt"
     body_path = "bookings/emails/booking_confirmed_message.txt"
 
@@ -86,10 +89,11 @@ def booking_confirmed(booking_id):
 
     # Attach html version as an alternative
     # html_message = render_to_string(
-    #     template_name="orders/emails/compiled/ticket.html", context=context
+    #     template_name="bookings/email/booking_confirmed_message.html", context=context
     # )
-    # email.attach_alternative(content=html_message, mimetype="text/html")
+    # user_email.attach_alternative(content=html_message, mimetype="text/html")
 
+    # Property Email
     subject_path = "bookings/emails/booking_confirmed_property_subject.txt"
     body_path = "bookings/emails/booking_confirmed_property_message.txt"
 
@@ -104,6 +108,7 @@ def booking_confirmed(booking_id):
         to=[notify, settings.DEFAULT_TO_EMAIL],
     )
 
+    # Send both emails in one go
     logger.info("sending booking emails...")
 
     connection = mail.get_connection()
