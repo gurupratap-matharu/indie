@@ -4,6 +4,7 @@ from typing import Any, Dict
 
 from django.conf import settings
 from django.contrib import messages
+from django.core.mail import mail_admins
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.templatetags.static import static
@@ -15,6 +16,7 @@ from django.views.generic import TemplateView
 import mercadopago
 
 from bookings.models import Booking
+from bookings.services import booking_confirmed
 
 logger = logging.getLogger(__name__)
 
@@ -196,10 +198,28 @@ def mercadopago_success(request):
     status = mercadopago_response.get("status")
     payment_id = mercadopago_response.get("payment_id")
 
+    logger.info("booking_id:%s" % booking_id)
+    logger.info("status: %s" % status)
+    logger.info("payment_id:%s" % payment_id)
+
     if (status == "approved") and booking_id:
         logger.info("mercadopago(🤝) payment successful!!!")
-        # TODO: SEND RESERVATION VIA EMAIL
-        # order_confirmed(order_id=order_id, payment_id=payment_id)
 
-    # TODO:if no get params are passed should we still redirect to success??
-    return redirect(reverse_lazy("payments:success"))
+        booking = get_object_or_404(Booking, id=booking_id)
+        # Confirm the booking
+        booking.confirm(payment_id=payment_id)
+
+        # Send confirmation emails
+        booking_confirmed(booking_id=booking_id)
+        messages.success("Payment Successful 🎉")
+
+        return redirect(reverse_lazy("payments:success"))
+
+    # Need to check this. In case of payments pending or failure the webhook is still
+    # triggered. We need to analyse the get parameteres
+    logger.info("mercadopago(🤝) payment unsuccessful 🛑")
+
+    # email the admins for troubleshooting
+    mail_admins(subject="MercadoPago Payment Issue", message=msg)
+
+    return redirect(reverse_lazy("payments:fail"))

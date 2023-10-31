@@ -3,6 +3,7 @@ from timeit import default_timer as timer
 
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.core import mail
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
@@ -65,23 +66,18 @@ def booking_confirmed(booking_id):
 
     start = timer()
 
-    subject_path = "bookings/emails/booking_confirmed_subject.txt"
-    body_path = "bookings/emails/booking_confirmed_message.txt"
-
     booking = get_object_or_404(
         Booking.objects.prefetch_related("items"), id=booking_id
     )
     context = {"booking": booking, "current_site": current_site}
 
-    # Confirm the booking
-    logger.info("confirming booking...")
-    # booking.confirm(payment_id=payment_id)
+    subject_path = "bookings/emails/booking_confirmed_subject.txt"
+    body_path = "bookings/emails/booking_confirmed_message.txt"
 
     subject = render_to_string(subject_path).strip()
     body = render_to_string(body_path, context).strip()
 
-    # Generate the Email object
-    email = EmailMultiAlternatives(
+    user_email = EmailMultiAlternatives(
         subject=subject,
         body=body,
         from_email=settings.BOOKING_EMAIL,
@@ -94,11 +90,26 @@ def booking_confirmed(booking_id):
     # )
     # email.attach_alternative(content=html_message, mimetype="text/html")
 
-    # Send email
-    logger.info("sending booking email...")
-    mail_sent = email.send(fail_silently=False)
+    subject_path = "bookings/emails/booking_confirmed_property_subject.txt"
+    body_path = "bookings/emails/booking_confirmed_property_message.txt"
+
+    subject = render_to_string(subject_path).strip()
+    body = render_to_string(body_path, context).strip()
+    notify = booking.items.first().product.property.email  # <-- fix this lookup
+
+    property_email = EmailMultiAlternatives(
+        subject=subject,
+        body=body,
+        from_email=settings.BOOKING_EMAIL,
+        to=[notify, settings.DEFAULT_TO_EMAIL],
+    )
+
+    logger.info("sending booking emails...")
+
+    connection = mail.get_connection()
+    mails_sent = connection.send_messages([user_email, property_email])
 
     end = timer()
     logger.info("took %.2f seconds", (end - start))
 
-    return mail_sent
+    return mails_sent
