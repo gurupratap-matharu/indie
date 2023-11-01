@@ -63,6 +63,11 @@
     {% block content %}
     {% endblock content %}
 
+    {% if request.user.is_superuser %}
+
+        {% include "includes/session.html" %}
+
+    {% endif %}
     <script type="text/javascript" src="{% static 'assets/js/core/bootstrap.bundle.min.js' %}" defer></script>
     <script type="text/javascript" src="{% static 'assets/js/plugins/perfect-scrollbar.min.js' %}" defer></script>
     <script type="text/javascript" src="{% static 'assets/js/plugins/smooth-scrollbar.min.js' %}" defer></script>
