@@ -8,7 +8,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-6 mx-auto">
+        <div class="col-12 col-lg-8 mx-auto">
             <div class="card shadow-lg mb-3">
                 <div class="card-header pb-0">
                     <h5>Cart</h5>
@@ -43,7 +43,7 @@
                                                         <p class="text-sm text-center mb-0">${{ item.price }}</p>
                                                     </td>
                                                     <td>
-                                                        <p class="text-sm mb-0">${{ item.total_price }}</p>
+                                                        <p class="text-sm text-right mb-0">${{ item.total_price }}</p>
                                                     </td>
                                                     <td class="text-center">
                                                         <form action="{% url "cart:cart-remove" product.id %}" method="post">
