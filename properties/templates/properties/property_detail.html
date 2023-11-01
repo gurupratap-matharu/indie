@@ -3,8 +3,12 @@
 {% load static %}
 
 {% block content %}
+
+    {% include "includes/navigation.html" %}
+    {% include "includes/alert.html" %}
+
     <div class="container-fluid">
-        <div class="page-header min-height-300 border-radius-xl mt-4"
+        <div class="page-header min-height-300 border-radius-xl"
              style="background-image: url('{% static 'assets/img/curved-images/curved0.jpg' %}');
                     background-position-y: 50%">
             <span class="mask bg-gradient-primary opacity-6"></span>

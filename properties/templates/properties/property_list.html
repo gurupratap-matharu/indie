@@ -3,7 +3,10 @@
 {% load static %}
 
 {% block content %}
-    <h1 class="text-center py-3">Property List 🌵🏜️</h1>
+
+    {% include "includes/navigation.html" %}
+    {% include "includes/alert.html" %}
+
     <div class="container">
         {% for property in properties %}
             <div class="card border-radius-xl shadow-lg mb-3">
