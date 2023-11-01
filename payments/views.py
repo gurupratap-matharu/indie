@@ -134,9 +134,9 @@ class PaymentSuccessView(TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        # We store the booking id in session to generate the reservation pdf if requested
-        # before clearing the session as user might wish to do another booking
-        context["booking_id"] = self.request.session.get("booking")
+
+        booking_id = self.request.session.get("booking")
+        context["booking"] = get_object_or_404(Booking, id=booking_id)
 
         # next since booking is confirmed we remove it from the session
         try:  # noqa
@@ -211,7 +211,9 @@ def mercadopago_success(request):
 
         # Send confirmation emails
         booking_confirmed(booking_id=booking_id)
+
         messages.success(request, "Payment Successful 🎉")
+        messages.success(request, "We have sent an email to %s" % booking.email)
 
         return redirect(reverse_lazy("payments:success"))
 

@@ -11,7 +11,7 @@
     {% include "includes/navigation.html" %}
     {% include "includes/alert.html" %}
 
-    <div class="row px-2">
+    <div class="row">
         <div class="col-xl-4 col-lg-6 col-md-7 col-sm-8 mx-auto">
             <div class="row">
                 <div class="col">
@@ -74,22 +74,20 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="col">
-                        <div class="card mt-4">
-                            <div class="card-header pb-0 p-3">
-                                <div class="row">
-                                    <div class="col-6 d-flex align-items-center">
-                                        <h6 class="mb-0">Your E Ticket</h6>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <button class="btn btn-outline-primary mb-0" href="">Send via Email</button>
-                                    </div>
+                    <div class="card mt-4">
+                        <div class="card-header pb-0 p-3">
+                            <div class="row">
+                                <div class="col-6 d-flex align-items-center">
+                                    <h6 class="mb-0">Your E Ticket</h6>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <button class="btn btn-outline-primary mb-0" href="">Send via Email</button>
                                 </div>
                             </div>
-                            <div class="card-body p-3">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="email" placeholder="name@example.com" required />
-                                </div>
+                        </div>
+                        <div class="card-body p-3">
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="email" placeholder="name@example.com" required />
                             </div>
                         </div>
                     </div>
@@ -109,3 +107,16 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.12.0/tsparticles.confetti.bundle.min.js"></script>
+    <script>
+         confetti({
+              particleCount: 800,
+              spread: 100,
+              origin: {
+                   y: 0.6
+              },
+         });
+    </script>
+{% endblock js %}
