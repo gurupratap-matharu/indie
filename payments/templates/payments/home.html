@@ -7,8 +7,45 @@
 {% endblock title %}
 
 {% block content %}
-    <div id="wallet_container"></div>
-    <a href="{{ preference.init_point }}" class="btn bg-gradient-primary">Pay with MercadoPago</a>
+    <div class="container-fluid my-3 py-3">
+        <div class="row justify-content-center">
+            <div class="col-md-2">
+                <div class="card shadow">
+                    <div class="card-header mx-4 p-3 text-center">
+                        <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg mx-auto">
+                            <i class="bi bi-credit-card opacity-10" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 p-3 text-center">
+                        <a href="{{ preference.init_point }}" class="stretched-link">
+                            <h6 class="text-center mb-0">Debito</h6>
+                        </a>
+                        <span class="text-xs">Peso Argentinos</span>
+                        <hr class="horizontal dark my-3" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 mt-md-0 mt-4">
+                <div class="card shadow">
+                    <div class="card-header mx-4 p-3 text-center">
+                        <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg mx-auto">
+                            <i class="bi bi-coin opacity-10" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 p-3 text-center">
+                        <h6 class="text-center mb-0">Non Argentine</h6>
+                        <span class="text-xs">USD</span>
+                        <hr class="horizontal dark my-3" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div id="wallet_container"></div>
+        </div>
+    </div>
 {% endblock content %}
 
 {% block js %}
