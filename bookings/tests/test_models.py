@@ -1,3 +1,4 @@
+import pdb
 import uuid
 from decimal import Decimal
 
@@ -105,6 +106,27 @@ class BookingModelTests(TestCase):
         self.assertIsNotNone(booking.payment_id)
         self.assertEqual(booking.payment_id, payment_id)
 
+    def test_a_booking_discount_cannot_exceed_100_percent(self):
+        b = BookingFactory(discount=101)  # <-- pass discount > 100
+
+        # validators are triggered only by calling full_clean()
+        with self.assertRaises(ValidationError) as cm:
+            b.full_clean()
+
+        exception = cm.exception
+        error_msg = exception.message_dict.get("discount")[0]
+        self.assertEqual(error_msg, "Ensure this value is less than or equal to 100.")
+
+    def test_a_booking_discount_cannot_be_less_than_zero(self):
+        b = BookingFactory(discount=-1)  # <-- pass negative discount
+
+        with self.assertRaises(ValidationError) as cm:
+            b.full_clean()
+
+        exception = cm.exception
+        error_msg = exception.message_dict.get("discount")[0]
+        self.assertEqual(error_msg, "Ensure this value is greater than or equal to 0.")
+
 
 class BookingItemModelTests(TestCase):
     """Test suite for booking item model"""
@@ -150,11 +172,19 @@ class BookingItemModelTests(TestCase):
         # make quantity = 0
         booking_item = BookingItemFactory(booking=self.booking, quantity=0)
 
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(ValidationError) as cm:
             booking_item.full_clean()
+
+        exc = cm.exception
+        error_msg = exc.message_dict.get("quantity")[0]
+        self.assertEqual(error_msg, "Ensure this value is greater than or equal to 1.")
 
         # make quantity = 20
         booking_item = BookingItemFactory(booking=self.booking, quantity=20)
 
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(ValidationError) as cm:
             booking_item.full_clean()
+
+        exc = cm.exception
+        error_msg = exc.message_dict.get("quantity")[0]
+        self.assertEqual(error_msg, "Ensure this value is less than or equal to 10.")

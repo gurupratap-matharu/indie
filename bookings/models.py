@@ -47,6 +47,10 @@ class Booking(models.Model):
     def __str__(self):
         return f"Booking {self.id}"
 
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
 
@@ -64,7 +68,7 @@ class Booking(models.Model):
                 code="invalid",
             )
 
-        logger.info("confirming %s" % self)
+        logger.info("confirming {obj}", extra={"obj": self})
 
         self.paid = True
         self.payment_id = payment_id

@@ -2,7 +2,7 @@ from typing import ClassVar
 
 from django.contrib import admin
 
-from properties.models import Addon, Property, Room
+from properties.models import Addon, Occurrence, Property, Room
 
 admin.site.site_header = "Indie Cactus 🌵🏜️"
 admin.site.site_title = "Indie Cactus Portal 🌵🏜️"
@@ -31,3 +31,10 @@ class PropertyAdmin(admin.ModelAdmin):
         return queryset.select_related(
             "owner",
         )
+
+
+@admin.register(Occurrence)
+class OccurrenceAdmin(admin.ModelAdmin):
+    list_display = ("room", "for_date", "rate", "availability")
+    list_filter = ("for_date",)
+    ordering = ("room", "for_date")

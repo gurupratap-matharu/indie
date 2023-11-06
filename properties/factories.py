@@ -1,4 +1,7 @@
+from datetime import timedelta
+
 from django.template.defaultfilters import slugify
+from django.utils import timezone
 
 import factory
 from django_countries import countries
@@ -6,7 +9,7 @@ from factory import fuzzy
 
 from users.factories import PropertyOwnerFactory
 
-from .models import Addon, Property, Room
+from .models import Addon, Occurrence, Property, Room
 from .samples import ROOM_SAMPLES
 
 
@@ -42,6 +45,10 @@ class PropertyFactory(factory.django.DjangoModelFactory):
     tax_id = factory.Faker("isbn10")
 
 
+class HostelFactory(PropertyFactory):
+    property_type = Property.HOSTEL
+
+
 class RoomFactory(factory.django.DjangoModelFactory):
     """
     Creates amazing room objects for any property
@@ -70,6 +77,19 @@ class RoomFactory(factory.django.DjangoModelFactory):
     )
     weekend_price = factory.LazyAttribute(
         lambda o: ROOM_SAMPLES[o.name]["weekend_price"]
+    )
+
+
+class OccurrenceFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Occurrence
+
+    room = factory.SubFactory(RoomFactory)
+    rate = factory.LazyAttribute(lambda o: o.room.weekday_price)
+    availability = 1
+    for_date = fuzzy.FuzzyDate(
+        start_date=timezone.now(),
+        end_date=timezone.now() + timedelta(days=90),
     )
 
 
