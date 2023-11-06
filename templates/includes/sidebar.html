@@ -59,7 +59,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">
+                {% url 'portal:schedule' property.slug as url_schedule %}
+                <a class="nav-link {% if request.path == url_schedule %}active text-white{% endif %}" href="{{ url_schedule }}">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px"
                              height="12px"
@@ -82,7 +83,7 @@
                             </g>
                         </svg>
                     </div>
-                    <span class="nav-link-text ms-1">Rooms</span>
+                    <span class="nav-link-text ms-1 text-dark">Schedule</span>
                 </a>
             </li>
             <li class="nav-item">

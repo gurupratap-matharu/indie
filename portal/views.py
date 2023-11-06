@@ -23,6 +23,15 @@ class CalendarView(OwnerPropertyMixin, DetailView):
     permission_required = "properties.view_property"
 
 
+class ScheduleView(OwnerPropertyMixin, DetailView):
+    """
+    Shows rates and availability (occurrences) for all rooms of the property
+    """
+
+    template_name = "portal/schedule.html"
+    permission_required = "properties.view_property"
+
+
 class PropertyCreateView(OwnerPropertyEditMixin, CreateView):
     permission_required = "properties.add_property"
     template_name = "portal/property_create.html"
