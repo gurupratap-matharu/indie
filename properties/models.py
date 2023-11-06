@@ -5,12 +5,20 @@ from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from django_countries.fields import CountryField
 
+from .managers import FutureManager
+
 logger = logging.getLogger(__name__)
+
+
+class HostelManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(property_type="HS")
 
 
 class Property(models.Model):
@@ -71,10 +79,13 @@ class Property(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    objects = models.Manager()
+    hostels = HostelManager()
+
     class Meta:
         ordering = ["-created"]  # noqa: RUF012
-        verbose_name = "property"
-        verbose_name_plural = "properties"
+        verbose_name = "Property"
+        verbose_name_plural = "Properties"
 
     def __str__(self):
         return self.name
@@ -165,12 +176,60 @@ class Room(models.Model):
     )
     active = models.BooleanField(_("Active"), default=True)
 
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
     class Meta:
-        verbose_name = "room"
-        verbose_name_plural = "rooms"
+        verbose_name = "Room"
+        verbose_name_plural = "Rooms"
+        ordering = ("property", "room_type")
 
     def __str__(self):
-        return self.name
+        return f"{self.property} | {self.name}"
+
+
+class Occurrence(models.Model):
+    """
+    Holds the rates and availability data for each room across each day.
+    """
+
+    rate = models.DecimalField(
+        _("Rate"), max_digits=12, decimal_places=2, validators=[MinValueValidator(1)]
+    )
+    availability = models.PositiveIntegerField(
+        _("Availability"), default=1, validators=[MaxValueValidator(20)]
+    )
+    room = models.ForeignKey(
+        "Room",
+        verbose_name=_("Room"),
+        on_delete=models.CASCADE,
+        related_name="occurrences",
+    )
+    for_date = models.DateField(
+        _("For Date"),
+        help_text=_("The date for the night the guest will stay at the property"),
+        validators=[MinValueValidator(limit_value=timezone.localdate)],
+    )
+
+    objects = models.Manager()
+    future = FutureManager()
+
+    class Meta:
+        verbose_name = _("Occurrence")
+        verbose_name_plural = _("Occurrences")
+        ordering = ("for_date",)
+
+        constraints = [  # noqa: RUF012
+            models.UniqueConstraint(
+                fields=["room", "for_date"], name="unique_occurrence"
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.room} | {self.for_date}"
+
+    def __lt__(self, other):
+        return self.for_date < other.for_date
 
 
 class Addon(models.Model):
