@@ -1,5 +1,5 @@
-import pdb
 from datetime import timedelta
+from decimal import Decimal
 
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
@@ -8,8 +8,13 @@ from django.utils import timezone
 
 from faker import Faker
 
-from properties.factories import OccurrenceFactory, PropertyFactory, RoomFactory
-from properties.models import Occurrence, Property, Room
+from properties.factories import (
+    AddonFactory,
+    OccurrenceFactory,
+    PropertyFactory,
+    RoomFactory,
+)
+from properties.models import Addon, Occurrence, Property, Room
 
 fake = Faker()
 
@@ -304,19 +309,96 @@ class OccurrenceModelTests(TestCase):
         error_msg = exc.message_dict.get("rate")[0]
         self.assertEqual(error_msg, "Ensure this value is greater than or equal to 1.")
 
-    def test_occurrence_availability_min_max_values(self):
+    def test_occurrence_availability_cannot_be_less_than_zero(self):
         next_month = self.today + timedelta(days=30)
 
-        # set availability less than zero
-        occ = OccurrenceFactory(room=self.room, for_date=next_month, availability=-1)
+        with self.assertRaises(IntegrityError):
+            # set availability less than zero
+            # note here we check for IntegrityError and not ValidationError
+            OccurrenceFactory(room=self.room, for_date=next_month, availability=-1)
 
-        with self.assertRaises(IntegrityError) as cm:
+    def test_occurrence_availability_upper_limit(self):
+        next_month = self.today + timedelta(days=30)
+
+        with self.assertRaises(ValidationError):
+            # Set availability > 20
+            # Upper limit is checked in validators so we need to assert ValidationError
+            # instead of IntegrityError.
+            # Also full_clean() method needs to be called to run the validator
+            occ = OccurrenceFactory(
+                room=self.room, for_date=next_month, availability=21
+            )
             occ.full_clean()
-
-        exc = cm.exception
-        error_msg = exc.message_dict.get("availability")[0]
-        self.assertEqual(error_msg, "Ensure this value is greater than or equal to 1.")
 
 
 class AddonModelTests(TestCase):
-    pass
+    """
+    Test suite for Addon model
+    """
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.property = PropertyFactory()
+        cls.addon = AddonFactory(name="Breakfast", property=cls.property)
+
+    def test_setup_data_creation(self):
+        self.assertEqual(Property.objects.count(), 1)
+        self.assertEqual(Addon.objects.count(), 1)
+
+    def test_str_representation(self):
+        self.assertEqual(str(self.addon), f"{self.addon.name}: {self.addon.price}")
+
+    def test_verbose_names(self):
+        self.assertEqual(str(self.addon._meta.verbose_name), "Addon")
+        self.assertEqual(str(self.addon._meta.verbose_name_plural), "Addons")
+
+    def test_addon_model_creation_is_accurate(self):
+        addon = Addon.objects.first()
+
+        self.assertEqual(addon.property, self.addon.property)
+        self.assertEqual(addon.name, self.addon.name)
+        self.assertEqual(addon.icon, self.addon.icon)
+        self.assertEqual(addon.price, self.addon.price)
+        self.assertEqual(addon.active, self.addon.active)
+
+    def test_max_length_of_all_fields(self):
+        obj = Addon.objects.first()
+        self.assertEqual(obj._meta.get_field("name").max_length, 64)
+        self.assertEqual(obj._meta.get_field("icon").max_length, 64)
+
+        self.assertEqual(obj._meta.get_field("price").max_digits, 12)
+        self.assertEqual(obj._meta.get_field("price").decimal_places, 2)
+
+    def test_addon_price_cannot_be_zero_or_negative(self):
+        with self.assertRaises(ValidationError):
+            addon = AddonFactory(property=self.property, price=0)
+            addon.full_clean()
+
+        with self.assertRaises(ValidationError):
+            addon = AddonFactory(property=self.property, price=-1)
+            addon.full_clean()
+
+    def test_addon_objects_are_ordered_by_name(self):
+        a_1 = Addon.objects.first()
+
+        a_2 = AddonFactory(name="Taxi", property=self.property)
+        a_3 = AddonFactory(name="Coffee", property=self.property)
+
+        objs = Addon.objects.all()
+
+        self.assertEqual(objs[0], a_1)  # name = "Breakfast"
+        self.assertEqual(objs[1], a_3)  # name = "Coffee"
+        self.assertEqual(objs[2], a_2)  # name = "Taxi"
+
+        self.assertEqual(a_1._meta.ordering, ("name",))
+
+    def test_addon_is_unique_for_a_given_property(self):
+        # We have an addon called `breakfast` for our property
+        # Creating another one should violate the unique constraint
+
+        with self.assertRaises(IntegrityError):
+            # Veer here we don't use the factory since it uses django_get_or_create
+            # So it won't try to create another addon for the same property
+            Addon.objects.create(
+                name="Breakfast", price=Decimal(1), property=self.property
+            )

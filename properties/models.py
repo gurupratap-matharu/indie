@@ -249,8 +249,12 @@ class Addon(models.Model):
     active = models.BooleanField(_("active"), default=True)
 
     class Meta:
-        verbose_name = "addon"
-        verbose_name_plural = "addons"
+        verbose_name = "Addon"
+        verbose_name_plural = "Addons"
+        ordering = ("name",)
+        constraints = [  # noqa: RUF012
+            models.UniqueConstraint(fields=["property", "name"], name="unique_addon"),
+        ]
 
     def __str__(self):
         return f"{self.name}: {self.price}"
