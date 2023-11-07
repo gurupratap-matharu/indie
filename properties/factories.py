@@ -83,6 +83,7 @@ class RoomFactory(factory.django.DjangoModelFactory):
 class OccurrenceFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Occurrence
+        django_get_or_create = ("room", "for_date")
 
     room = factory.SubFactory(RoomFactory)
     rate = factory.LazyAttribute(lambda o: o.room.weekday_price)

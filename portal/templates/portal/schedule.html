@@ -13,7 +13,54 @@
 {% endblock page_title %}
 
 {% block main %}
-    <div class="card card-calendar">
+    {% for room in property.rooms.all %}
+        <div class="card mb-3 shadow">
+            <div class="card-header">
+                <h6>{{ room.name }}</h6>
+            </div>
+            <div class="card-body p-3">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover align-items-center align-middle">
+                        {% with occurrences=room.occurrences.all %}
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <p class="mb-0">Date</p>
+                                    </td>
+                                    {% for occ in occurrences %}
+                                        <td>
+                                            <p class="mb-0">{{ occ.for_date|date:"D d" }}</p>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p class="mb-0">Available</p>
+                                    </td>
+                                    {% for occ in occurrences %}
+                                        <td>
+                                            <p class="mb-0">{{ occ.availability }}</p>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p class="mb-0">Rate</p>
+                                    </td>
+                                    {% for occ in occurrences %}
+                                        <td>
+                                            <p class="mb-0">{{ occ.rate }}</p>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        {% endwith %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="card card-calendar mt-3">
         <div class="card-header">
             <h5>Schedule</h5>
         </div>
