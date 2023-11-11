@@ -4,6 +4,7 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
+from django.urls import reverse_lazy
 from django.utils import timezone
 
 from faker import Faker
@@ -176,6 +177,13 @@ class RoomModelTests(TestCase):
         room = self.rooms[0]
         self.assertEqual(str(room._meta.verbose_name), "Room")
         self.assertEqual(str(room._meta.verbose_name_plural), "Rooms")
+
+    def test_schedule_url(self):
+        room = self.rooms[0]
+        actual = room.get_schedule_url()
+        expected = f"/portal/{self.property.slug}/schedule/rooms/{room.id}/"
+
+        self.assertEqual(actual, expected)
 
     def test_room_model_creation_is_correct(self):
         room = self.rooms[0]
