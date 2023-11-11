@@ -182,10 +182,15 @@ class Room(models.Model):
     class Meta:
         verbose_name = "Room"
         verbose_name_plural = "Rooms"
-        ordering = ("property", "room_type")
 
     def __str__(self):
-        return f"{self.property} | {self.name}"
+        return f"{self.name}"
+
+    def get_schedule_url(self):
+        return reverse_lazy(
+            "portal:schedule-detail",
+            kwargs={"slug": self.property.slug, "room_id": self.id},
+        )
 
 
 class Occurrence(models.Model):
@@ -226,7 +231,7 @@ class Occurrence(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.room} | {self.for_date}"
+        return f"Occ: {self.for_date}"
 
     def __lt__(self, other):
         return self.for_date < other.for_date
