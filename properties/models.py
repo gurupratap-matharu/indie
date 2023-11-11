@@ -92,11 +92,9 @@ class Property(models.Model):
 
     def save(self, *args, **kwargs) -> None:
         if not self.slug:
-            logger.info(
-                "slugifying {obj}:{slug}",
-                extra={"obj": self.name, "slug": slugify(self.name)},
-            )
-            self.slug = slugify(self.name)
+            slug = slugify(self.name)
+            logger.info("slugifying %s:%s" % (self.name, slug))
+            self.slug = slug
 
         return super().save(*args, **kwargs)
 
@@ -186,6 +184,9 @@ class Room(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    def get_add_to_cart_url(self):
+        return reverse_lazy("cart:cart-add", kwargs={"product_id": self.id})
 
     def get_schedule_url(self):
         return reverse_lazy(

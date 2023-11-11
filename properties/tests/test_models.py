@@ -185,6 +185,13 @@ class RoomModelTests(TestCase):
 
         self.assertEqual(actual, expected)
 
+    def test_add_to_cart_url(self):
+        room = self.rooms[0]
+        actual = room.get_add_to_cart_url()
+        expected = f"/cart/add/{room.id}/"
+
+        self.assertEqual(actual, expected)
+
     def test_room_model_creation_is_correct(self):
         room = self.rooms[0]
         room_from_db = Room.objects.get(id=room.id)
