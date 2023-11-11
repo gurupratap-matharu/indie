@@ -4,7 +4,6 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
-from django.urls import reverse_lazy
 from django.utils import timezone
 
 from faker import Faker
@@ -161,8 +160,41 @@ class RoomModelTests(TestCase):
 
     @classmethod
     def setUpTestData(cls) -> None:
+        cls.today = timezone.localdate()
+        cls.tomorrow = cls.today + timedelta(days=1)
+        cls.day_after = cls.today + timedelta(days=2)
+
         cls.property = PropertyFactory()
         cls.rooms = RoomFactory.create_batch(size=2, property=cls.property)
+
+        # Create different rates for all occurrences for one room
+        cls.room = cls.rooms[0]
+        cls.rate_today, cls.rate_tmrw, cls.rate_day_after = 10, 15, 20
+        cls.av_today, cls.av_tmrw, cls.av_day_after = 4, 3, 2
+
+        cls.occurrences = [
+            # Today
+            OccurrenceFactory(
+                room=cls.room,
+                for_date=cls.today,
+                rate=cls.rate_today,
+                availability=cls.av_today,
+            ),
+            # Tomorrow
+            OccurrenceFactory(
+                room=cls.room,
+                for_date=cls.tomorrow,
+                rate=cls.rate_tmrw,
+                availability=cls.av_tmrw,
+            ),
+            # Day after
+            OccurrenceFactory(
+                room=cls.room,
+                for_date=cls.day_after,
+                rate=cls.rate_day_after,
+                availability=cls.av_day_after,
+            ),
+        ]
 
     def test_setup_data_creation(self):
         self.assertEqual(Property.objects.count(), 1)
@@ -234,6 +266,87 @@ class RoomModelTests(TestCase):
         exc = cm.exception
         error_msg = exc.message_dict.get("weekday_price")[0]
         self.assertEqual(error_msg, "Ensure this value is greater than or equal to 1.")
+
+    # get_cost()
+    def test_room_get_cost_for_multiple_nights_works_correctly(self):
+        """
+        A room may have different pricing over weekends (fri, sat)
+
+        When being booked for multiple nights say thu, fri, sat, sun this method
+        should calculate cost of each night and sum it up correctly.
+        """
+
+        actual = self.room.get_cost(start=self.today, end=self.day_after)
+        expected = self.rate_today + self.rate_tmrw + self.rate_day_after
+
+        self.assertEqual(actual, expected)
+
+    def test_room_get_cost_for_only_one_night_works_correctly(self):
+        actual = self.room.get_cost(start=self.today, end=self.today)
+        expected = self.rate_today
+
+        self.assertEqual(actual, expected)
+
+    def test_room_get_cost_for_two_nights_works_correctly(self):
+        actual = self.room.get_cost(start=self.today, end=self.tomorrow)
+        expected = self.rate_today + self.rate_tmrw
+
+        self.assertEqual(actual, expected)
+
+    def test_room_get_cost_raises_exception_for_invalid_input(self):
+        with self.assertRaises(ValidationError):
+            # end date < start date
+            self.room.get_cost(start=self.tomorrow, end=self.today)
+
+    # get_availability()
+    def test_room_get_availability_for_multiple_nights_works_correctly(self):
+        actual = self.room.get_availability(start=self.today, end=self.day_after)
+        expected = min(self.av_today, self.av_tmrw, self.av_day_after)
+
+        self.assertEqual(actual, expected)
+
+    def test_room_get_availability_for_two_nights_works_correctly(self):
+        actual = self.room.get_availability(start=self.today, end=self.tomorrow)
+        expected = min(self.av_today, self.av_tmrw)
+
+        self.assertEqual(actual, expected)
+
+    def test_room_get_availability_for_one_night_works_correctly(self):
+        actual = self.room.get_availability(start=self.today, end=self.today)
+        expected = self.av_today
+
+        self.assertEqual(actual, expected)
+
+    def test_room_get_availability_raises_exception_for_invalid_input(self):
+        with self.assertRaises(ValidationError):
+            # end date < start date
+            self.room.get_availability(start=self.tomorrow, end=self.today)
+
+    def test_room_type_is_identified_correctly_for_shared_dorm_rooms(self):
+        room_1 = RoomFactory(room_type=Room.MIXED_DORM)
+        room_2 = RoomFactory(room_type=Room.FEMALE_DORM)
+        room_3 = RoomFactory(room_type=Room.MALE_DORM)
+
+        self.assertTrue(room_1.is_dorm())
+        self.assertTrue(room_2.is_dorm())
+        self.assertTrue(room_3.is_dorm())
+
+        self.assertFalse(room_1.is_private())
+        self.assertFalse(room_2.is_private())
+        self.assertFalse(room_3.is_private())
+
+    def test_room_type_is_identified_correctly_for_private_rooms(self):
+        room_1 = RoomFactory(room_type=Room.PRIVATE_ROOM)
+        room_2 = RoomFactory(room_type=Room.PRIVATE_TENT)
+        room_3 = RoomFactory(room_type=Room.DOUBLE_BED)
+
+        self.assertTrue(room_1.is_private())
+        self.assertTrue(room_2.is_private())
+        self.assertTrue(room_3.is_private())
+
+        self.assertFalse(room_1.is_dorm())
+        self.assertFalse(room_2.is_dorm())
+        self.assertFalse(room_3.is_dorm())
 
 
 class OccurrenceModelTests(TestCase):

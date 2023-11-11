@@ -1,9 +1,12 @@
 import logging
 import uuid
+from decimal import Decimal
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
+from django.db.models import Min, Sum
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.text import slugify
@@ -193,6 +196,60 @@ class Room(models.Model):
             "portal:schedule-detail",
             kwargs={"slug": self.property.slug, "room_id": self.id},
         )
+
+    def get_cost(self, start, end) -> Decimal:
+        """
+        Find the total cost of a room within specified dates.
+        """
+
+        if end < start:
+            error_msg = "End date:%(end)s cannot be less than Start date:%(start)s"
+            raise ValidationError(
+                error_msg,
+                params={"start": start, "end": end},
+                code="invalid",
+            )
+
+        qs = self.occurrences.filter(for_date__range=(start, end))
+        cost = qs.aggregate(total=Sum("rate")).get("total", 0)
+        cost = cost or Decimal(0)
+        logger.info("Room:%s, from:%s till:%s Cost:$%s" % (self, start, end, cost))
+
+        return cost
+
+    def get_availability(self, start, end) -> int:
+        """
+        Calculate the min availability over a date range
+
+        For shared rooms like dorms if availability today=3, tomorrow=4, day_after=5 -> return 3
+        For private rooms availability is either 1 (available) or 0 (not available)
+        """
+
+        if end < start:
+            error_msg = "End date:%(end)s cannot be less than Start date:%(start)s"
+            raise ValidationError(
+                error_msg,
+                params={"start": start, "end": end},
+                code="invalid",
+            )
+
+        qs = self.occurrences.filter(for_date__range=(start, end))
+        availability = qs.aggregate(available=Min("availability")).get("available", 0)
+
+        availability = availability or 0
+
+        logger.info(
+            "Room:%s, from:%s till:%s Availability:%s"
+            % (self, start, end, availability)
+        )
+
+        return availability
+
+    def is_dorm(self):
+        return self.room_type in {self.MIXED_DORM, self.FEMALE_DORM, self.MALE_DORM}
+
+    def is_private(self):
+        return not self.is_dorm()
 
 
 class Occurrence(models.Model):
