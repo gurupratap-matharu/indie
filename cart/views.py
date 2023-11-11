@@ -32,6 +32,8 @@ def cart_add(request, product_id):
             product=product, quantity=cd["quantity"], override_quantity=cd["override"]
         )
 
+    logger.warning("⚠️ cart form in invalid...")
+
     return redirect("cart:cart-detail")
 
 
