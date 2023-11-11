@@ -1,5 +1,8 @@
 import logging
+from typing import Any
 
+from django.db.models import CharField, F, Func, Value
+from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
@@ -25,11 +28,43 @@ class CalendarView(OwnerPropertyMixin, DetailView):
 
 class ScheduleView(OwnerPropertyMixin, DetailView):
     """
-    Shows rates and availability (occurrences) for all rooms of the property
+    List view to show all rooms of the property from where detailed schedule can be linked.
     """
 
     template_name = "portal/schedule.html"
     permission_required = "properties.view_property"
+
+
+class ScheduleDetailView(OwnerPropertyMixin, DetailView):
+    """
+    Show the schedule calendar for one single room.
+    """
+
+    template_name = "portal/schedule_detail.html"
+    permission_required = "properties.view_property"
+
+    def get_schedule_data(self, room):
+        qs = room.occurrences.annotate(
+            formatted_date=Func(
+                F("for_date"),
+                Value("yyyy-MM-dd hh:mm:ss"),
+                function="to_char",
+                output_field=CharField(),
+            )
+        )
+        qs = qs.values_list("formatted_date", "availability")
+        return list(qs)
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        qs = self.object.rooms.all()
+        room_id = self.kwargs.get("room_id")
+
+        context["room"] = room = get_object_or_404(qs, id=room_id)
+        context["rates"] = self.get_schedule_data(room)
+
+        return context
 
 
 class PropertyCreateView(OwnerPropertyEditMixin, CreateView):

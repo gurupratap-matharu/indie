@@ -13,110 +13,22 @@
 {% endblock page_title %}
 
 {% block main %}
-    {% for room in property.rooms.all %}
-        <div class="card mb-3 shadow">
-            <div class="card-header">
-                <h6>{{ room.name }}</h6>
-            </div>
-            <div class="card-body p-3">
-                <div class="table-responsive">
-                    <table class="table table-sm table-hover align-items-center align-middle">
-                        {% with occurrences=room.occurrences.all %}
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <p class="mb-0">Date</p>
-                                    </td>
-                                    {% for occ in occurrences %}
-                                        <td>
-                                            <p class="mb-0">{{ occ.for_date|date:"D d" }}</p>
-                                        </td>
-                                    {% endfor %}
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p class="mb-0">Available</p>
-                                    </td>
-                                    {% for occ in occurrences %}
-                                        <td>
-                                            <p class="mb-0">{{ occ.availability }}</p>
-                                        </td>
-                                    {% endfor %}
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p class="mb-0">Rate</p>
-                                    </td>
-                                    {% for occ in occurrences %}
-                                        <td>
-                                            <p class="mb-0">{{ occ.rate }}</p>
-                                        </td>
-                                    {% endfor %}
-                                </tr>
-                            </tbody>
-                        {% endwith %}
-                    </table>
-                </div>
-            </div>
+    <div class="card card-plain mb-4">
+        <div class="card-header px-0 d-flex justify-content-between pb-0">
+            <h5>
+                <a href="{{ property.get_portal_url }}" class="icon-move-left">
+                    <i class="bi bi-chevron-left me-2" aria-hidden="true">
+                    </i>
+                    Dashboard
+                </a>
+            </h5>
         </div>
-    {% endfor %}
-    <div class="card card-calendar mt-3">
-        <div class="card-header">
-            <h5>Schedule</h5>
-        </div>
-        <div class="card-body p-3">
-            <div id="timeline"></div>
+        <div class="card-body">
+            {% for room in property.rooms.all %}
+                <a href="{{ room.get_schedule_url }}">
+                    <h6>{{ room.name }}</h6>
+                </a>
+            {% endfor %}
         </div>
     </div>
 {% endblock main %}
-
-{% block js %}
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-         google.charts.load('current', {
-              'packages': ['timeline']
-         });
-         google.charts.setOnLoadCallback(drawChart);
-
-         function drawChart() {
-              var container = document.getElementById('timeline');
-              var chart = new google.visualization.Timeline(container);
-              var dataTable = new google.visualization.DataTable();
-
-              dataTable.addColumn({
-                   type: 'string',
-                   id: 'Room'
-              });
-              dataTable.addColumn({
-                   type: 'string',
-                   id: 'Name'
-              });
-              dataTable.addColumn({
-                   type: 'date',
-                   id: 'Start'
-              });
-              dataTable.addColumn({
-                   type: 'date',
-                   id: 'End'
-              });
-              dataTable.addRows([
-                   ['President', 'George Washington', new Date(1789, 3, 30), new Date(1797, 2, 4)],
-                   ['President', 'Thomas Jefferson', new Date(1801, 2, 4), new Date(1809, 2, 4)],
-                   ['Vice President', 'John Adams', new Date(1789, 3, 21), new Date(1797, 2, 4)],
-                   ['Vice President', 'Thomas Jefferson', new Date(1797, 2, 4), new Date(1801, 2, 4)],
-                   ['Vice President', 'George Clinton', new Date(1805, 2, 4), new Date(1812, 3, 20)],
-                   ['Secretary of State', 'John Jay', new Date(1789, 8, 25), new Date(1790, 2, 22)],
-                   ['Secretary of State', 'Edmund Randolph', new Date(1794, 0, 2), new Date(1795, 7, 20)],
-                   ['Secretary of State', 'Levi Lincoln', new Date(1801, 2, 5), new Date(1801, 4, 1)],
-                   ['Secretary of State', 'James Madison', new Date(1801, 4, 2), new Date(1809, 2, 3)]
-              ]);
-              var options = {
-                   timeline: {
-                        colorByRowLabel: true
-                   },
-                   alternatingRowStyle: false
-              };
-              chart.draw(dataTable, options);
-         }
-    </script>
-{% endblock js %}

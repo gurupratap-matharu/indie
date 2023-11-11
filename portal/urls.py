@@ -7,6 +7,7 @@ from .views import (
     PropertyCreateView,
     PropertyDeleteView,
     PropertyUpdateView,
+    ScheduleDetailView,
     ScheduleView,
 )
 
@@ -18,6 +19,11 @@ portal_patterns = [
     path("delete/", PropertyDeleteView.as_view(), name="property-delete"),
     path("calendar/", CalendarView.as_view(), name="calendar"),
     path("schedule", ScheduleView.as_view(), name="schedule"),
+    path(
+        "schedule/rooms/<int:room_id>/",
+        ScheduleDetailView.as_view(),
+        name="schedule-detail",
+    ),
     path("", DashboardView.as_view(), name="dashboard"),
 ]
 
