@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class MyAccountAdapter(DefaultAccountAdapter):
-    def get_login_redirect_url(self, _):
+    def get_login_redirect_url(self, request):  # noqa
         # user = request.user
         # company = user.companies.first()
         # url = company.get_admin_url() if company else settings.LOGIN_REDIRECT_URL
