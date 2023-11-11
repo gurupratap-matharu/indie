@@ -182,6 +182,7 @@ class Room(models.Model):
     class Meta:
         verbose_name = "Room"
         verbose_name_plural = "Rooms"
+        ordering = ("property", "room_type")
 
     def __str__(self):
         return f"{self.name}"

@@ -171,7 +171,7 @@ class RoomModelTests(TestCase):
 
     def test_str_representation(self):
         room = self.rooms[0]
-        self.assertEqual(str(room), f"{self.property} | {room.name}")
+        self.assertEqual(str(room), f"{room.name}")
 
     def test_verbose_names(self):
         room = self.rooms[0]
@@ -257,7 +257,7 @@ class OccurrenceModelTests(TestCase):
 
     def test_str_representation(self):
         occ = self.occurrences[0]
-        self.assertEqual(str(occ), f"{self.room} | {occ.for_date}")
+        self.assertEqual(str(occ), f"Occ: {occ.for_date}")
 
     def test_verbose_names(self):
         occ = self.occurrences[0]
@@ -303,7 +303,7 @@ class OccurrenceModelTests(TestCase):
         # Creating another one should violate the unique constraint
 
         with self.assertRaises(IntegrityError):
-            OccurrenceFactory(room=self.room, for_date=self.today)
+            Occurrence.objects.create(room=self.room, for_date=self.today)
 
     def test_occurrence_rate_is_always_positive(self):
         # make rate = 0
