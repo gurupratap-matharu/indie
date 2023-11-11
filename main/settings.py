@@ -274,7 +274,9 @@ LOGGING = {
             "format": "[%(asctime)s][%(process)d][%(levelname)s][%(name)s] %(message)s"
         },
         "elegant": {
-            "format": ("%(levelname)-8s" "(%(module)s:%(lineno)d) %(message)s"),
+            "format": (
+                "%(asctime)s %(levelname)-8s" "(%(module)s:%(lineno)d) %(message)s"
+            ),
             "datefmt": "%Y-%m-%d %H:%M:%S",
         },
     },
