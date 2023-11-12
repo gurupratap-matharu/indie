@@ -86,7 +86,7 @@ class BookingItem(models.Model):
         related_name="booking_items",
         on_delete=models.SET_NULL,
         null=True,
-    )  # <-- I think this needs to be changed to Occurrence
+    )
     price = models.DecimalField(_("Price"), max_digits=12, decimal_places=2)
     quantity = models.PositiveIntegerField(
         _("Quantity"),

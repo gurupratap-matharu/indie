@@ -77,7 +77,7 @@ def booking_confirmed(booking_id):
     subject_path = "bookings/emails/booking_confirmed_subject.txt"
     body_path = "bookings/emails/booking_confirmed_message.txt"
 
-    subject = render_to_string(subject_path).strip()
+    subject = render_to_string(subject_path, context).strip()
     body = render_to_string(body_path, context).strip()
 
     user_email = EmailMultiAlternatives(
@@ -97,7 +97,7 @@ def booking_confirmed(booking_id):
     subject_path = "bookings/emails/booking_confirmed_property_subject.txt"
     body_path = "bookings/emails/booking_confirmed_property_message.txt"
 
-    subject = render_to_string(subject_path).strip()
+    subject = render_to_string(subject_path, context).strip()
     body = render_to_string(body_path, context).strip()
     notify = booking.items.first().product.property.email  # <-- fix this lookup
 
