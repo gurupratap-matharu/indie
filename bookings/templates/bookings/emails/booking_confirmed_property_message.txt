@@ -4,18 +4,22 @@
 
 {% block content %}
 
-{% blocktranslate with name=booking.full_name booking_id=booking.id email=booking.email whatsapp=booking.whatsapp country=booking.residence.name created=booking.created cost=booking.get_total_cost %}
+{% blocktranslate with name=booking.full_name booking_id=booking.id email=booking.email whatsapp=booking.whatsapp country=booking.residence.name created=booking.created %}
 Hey,
 
 You have received a new booking from {{ name }}.
+
 Booking Id: {{ booking_id }}
 Created on: {{ created }}
 
 Email: {{ email }}
 Whatsapp: {{ whatsapp }}
-Country: {{ country }}
+Country: {{ country }}{% endblocktranslate %}
 
-Total Cost: ${{ cost }}
+{% for item in booking.items.all %}
+ - {{ item.product }}
+{% endfor %}
+Total Cost: ${{ booking.get_total_cost }}
 
 
 If you have any questions regarding this booking, please reply to
@@ -26,6 +30,5 @@ IndieCactus Support Team
 https://www.indiecactus.xyz
 Email: support@indiecactus.xyz
 Tel: +54 0 11 5025 4191
-{% endblocktranslate %}
 
 {% endblock content %}
