@@ -4,12 +4,28 @@
 
 {% block content %}
 
-{% blocktranslate with name=booking.first_name booking_id=booking.id %}
+{% blocktranslate with name=booking.full_name booking_id=booking.id email=booking.email whatsapp=booking.whatsapp country=booking.residence.name created=booking.created cost=booking.get_total_cost %}
 Hey,
 
 You have received a new booking from {{ name }}.
 Booking Id: {{ booking_id }}
+Created on: {{ created }}
 
+Email: {{ email }}
+Whatsapp: {{ whatsapp }}
+Country: {{ country }}
+
+Total Cost: ${{ cost }}
+
+
+If you have any questions regarding this booking, please reply to
+this email.
+
+Regards,
+IndieCactus Support Team
+https://www.indiecactus.xyz
+Email: support@indiecactus.xyz
+Tel: +54 0 11 5025 4191
 {% endblocktranslate %}
 
 {% endblock content %}

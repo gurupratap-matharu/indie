@@ -1,1 +1,4 @@
-{% load i18n %}{% blocktranslate %}New booking{% endblocktranslate %}
+{% load i18n %}
+{% blocktranslate with name=booking.full_name booking_id=booking.id %}
+New booking from {{ name }}
+{% endblocktranslate %}
