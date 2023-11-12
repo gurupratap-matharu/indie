@@ -5,10 +5,16 @@
 {% block content %}
 
 {% blocktranslate with name=booking.first_name booking_id=booking.id %}
-Thanks for your booking {{ name }}.
+Dear {{ name }},
 
 Pack you bags! Your booking is confirmed.
-Your booking ID is {{ booking_id }}
-{% endblocktranslate %}
+Booking ID is {{ booking_id }}{% endblocktranslate %}
+
+Room Details
+{% for item in booking.items.all %}
+ - {{ item.product }}
+{% endfor %}
+Total Cost: ${{ booking.get_total_cost }}
+
 
 {% endblock content %}
