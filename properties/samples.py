@@ -5,10 +5,14 @@ ROOM_SAMPLES = {
         "num_of_guests": 7,
         "room_type": "FD",
         "ensuite": True,
-        "description": "Habitación con baño privado y capacidad 7 mujeres. Capacidad 7 personas. Camas cuchetas. Piso planta baja. Baño compartido con secador de pelo. Calefacción y A.C. Toallones de baño para alquilar. Incluye desayuno básico. El precio publicado es por persona",
+        "description": "Habitación con baño privado y capacidad 7 mujeres. Capacidad 7 personas."
+        "Camas cuchetas. Piso planta baja. Baño compartido con secador de pelo."
+        "Calefacción y A.C. Toallones de baño para alquilar. Incluye desayuno básico."
+        "El precio publicado es por persona",
         "weekday_price": 11000,
         "weekend_price": 15000,
-        "amenities": "220-240 volt circuits, Air-conditioning, Hairdryer,Wireless internet (WiFi), Lockers debajo de la cama",
+        "amenities": "220-240 volt circuits, Air-conditioning, Hairdryer,"
+        "Wireless internet (WiFi), Lockers debajo de la cama",
     },
     "Mix 8 beds dorm": {
         "name": "Mix 8 beds dorm",
@@ -52,10 +56,14 @@ ROOM_SAMPLES = {
         "num_of_guests": 2,
         "room_type": "PR",
         "ensuite": True,
-        "description": "Habitación doble con baño compartido. Capacidad 2 personas. Cama tamaño king Piso superior. Baño compartido con secador de pelo. Calefacción y A.C.Toallones de baño para alquilar. Incluye desayuno básico. El precio publicado es por habitación",
+        "description": "Habitación doble con baño compartido. Capacidad 2 personas."
+        "Cama tamaño king Piso superior. Baño compartido con secador de pelo."
+        "Calefacción y A.C.Toallones de baño para alquilar. Incluye desayuno básico."
+        "El precio publicado es por habitación",
         "weekday_price": 19000,
         "weekend_price": 23000,
-        "amenities": "220-240 volt circuits, Air-conditioning, Hairdryer, Wireless internet (WiFi), Lockers debajo de la cama, Slippers, Cupboard",
+        "amenities": "220-240 volt circuits, Air-conditioning, Hairdryer, Wireless internet (WiFi),"
+        "Lockers debajo de la cama, Slippers, Cupboard",
     },
     "Double Queen Size": {
         "name": "Double Queen Size",
@@ -63,10 +71,14 @@ ROOM_SAMPLES = {
         "num_of_guests": 2,
         "room_type": "PR",
         "ensuite": True,
-        "description": "Habitación doble con baño compartido. Capacidad 2 personas. Cama tamaño king Piso superior. Baño compartido con secador de pelo. Calefacción y A.C.Toallones de baño para alquilar. Incluye desayuno básico. El precio publicado es por habitación",
+        "description": "Habitación doble con baño compartido. Capacidad 2 personas"
+        "Cama tamaño king Piso superior. Baño compartido con secador de pelo."
+        "Calefacción y A.C.Toallones de baño para alquilar. Incluye desayuno básico."
+        "El precio publicado es por habitación",
         "weekday_price": 19000,
         "weekend_price": 23000,
-        "amenities": "220-240 volt circuits, Air-conditioning, Hairdryer, Wireless internet (WiFi), Lockers debajo de la cama, Slippers, Cupboard",
+        "amenities": "220-240 volt circuits, Air-conditioning, Hairdryer \
+            Wireless internet (WiFi), Lockers debajo de la cama, Slippers, Cupboard",
     },
     "Double Twin Bed": {
         "name": "Double Twin Bed",
@@ -84,6 +96,7 @@ ROOM_SAMPLES = {
                             El precio publicado es por habitación""",
         "weekday_price": 19000,
         "weekend_price": 23000,
-        "amenities": "220-240 volt circuits, Air-conditioning, Hairdryer, Wireless internet (WiFi), Lockers debajo de la cama, Slippers, Cupboard",
+        "amenities": """220-240 volt circuits, Air-conditioning, Hairdryer, 
+        Wireless internet (WiFi), Lockers debajo de la cama, Slippers, Cupboard""",
     },
 }
