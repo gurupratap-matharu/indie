@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "allauth.socialaccount.providers.apple",
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.facebook",
     "django_extensions",
@@ -93,11 +92,9 @@ AUTHENTICATION_BACKENDS = (
 
 # Django allauth
 ACCOUNT_AUTHENTICATION_METHOD = "email"
-# ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "optional"
-ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
 ACCOUNT_LOGOUT_REDIRECT = reverse_lazy("pages:home")
 ACCOUNT_PRESERVE_USERNAME_CASING = False
@@ -122,7 +119,6 @@ SOCIALACCOUNT_PROVIDERS = {
         },
     },
     "facebook": {
-        "EMAIL_AUTHENTICATION": True,
         "METHOD": "oauth2",
         "SCOPE": [
             "email",
