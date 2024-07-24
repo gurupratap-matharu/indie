@@ -24,6 +24,9 @@ check:
 check-deploy:
 	python manage.py check --deploy
 
+css:
+	sass static/assets/scss/soft-design-system.scss -s compressed static/assets/css/styles.min.css
+
 install:
 	poetry install
 
@@ -70,7 +73,7 @@ format:
 lint:
 	poetry run black --check --diff .
 	poetry run isort . --check-only --profile black
-	poetry run ruff .
+	poetry run ruff check --fix .
 	git ls-files '*.html' | xargs djlint --check
 
 test: check migrations-check
@@ -81,7 +84,7 @@ security:
 	poetry run bandit -r .
 	poetry run safety check
 
-ci: lint test
+ci: format lint security test
 
 superuser:
 	python manage.py createsuperuser
