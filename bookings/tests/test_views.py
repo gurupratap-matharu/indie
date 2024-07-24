@@ -7,6 +7,7 @@ from django.urls import resolve, reverse_lazy
 from bookings.forms import BookingForm
 from bookings.views import BookingCreateView
 from cart.cart import Cart
+from properties.factories import PropertyFactory, RoomFactory
 
 
 class BookingCreateTests(TestCase):
@@ -21,8 +22,21 @@ class BookingCreateTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        cls.property = PropertyFactory()
+        cls.room = RoomFactory(property=cls.property)
+
         cls.url = reverse_lazy("bookings:booking-create")
         cls.template_name = "bookings/booking_form.html"
+        cls.search_query = {}  # <-- fill this later
+
+    def setUp(self) -> None:
+        session = self.client.session
+        session["q"] = self.search_query
+        session.save()
+
+        # Add a room to the cart
+        self.client.post(self.room.get_add_to_cart_url())
+        session.save()
 
     def test_booking_create_url_resolve_correct_view(self):
         view = resolve(self.url)
