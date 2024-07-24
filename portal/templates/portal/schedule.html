@@ -1,34 +1,34 @@
 {% extends "layouts/base-sidebar.html" %}
 
 {% block title %}
-    Schedule | {{ property.name }}
+  Schedule | {{ property.name }}
 {% endblock title %}
 
 {% block breadcrumb %}
-    Schedule
+  Schedule
 {% endblock breadcrumb %}
 
 {% block page_title %}
-    {{ property.name }}
+  {{ property.name }}
 {% endblock page_title %}
 
 {% block main %}
-    <div class="card card-plain mb-4">
-        <div class="card-header px-0 d-flex justify-content-between pb-0">
-            <h5>
-                <a href="{{ property.get_portal_url }}" class="icon-move-left">
-                    <i class="bi bi-chevron-left me-2" aria-hidden="true">
-                    </i>
-                    Dashboard
-                </a>
-            </h5>
-        </div>
-        <div class="card-body">
-            {% for room in property.rooms.all %}
-                <a href="{{ room.get_schedule_url }}">
-                    <h6>{{ room.name }}</h6>
-                </a>
-            {% endfor %}
-        </div>
+  <div class="card card-plain mb-4">
+    <div class="card-header px-0 d-flex justify-content-between pb-0">
+      <h5>
+        <a href="{{ property.get_portal_url }}" class="icon-move-left">
+          <i class="bi bi-chevron-left me-2" aria-hidden="true">
+          </i>
+          Dashboard
+        </a>
+      </h5>
     </div>
+    <div class="card-body">
+      {% for room in property.rooms.all %}
+        <a href="{{ room.get_schedule_url }}">
+          <h6>{{ room.name }}</h6>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock main %}

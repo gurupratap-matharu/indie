@@ -1,26 +1,26 @@
 {% extends "layouts/base-sidebar.html" %}
 
 {% block title %}
-    Update | {{ property.name }}
+  Update | {{ property.name }}
 {% endblock title %}
 
 {% block breadcrumb %}
-    Update
+  Update
 {% endblock breadcrumb %}
 
 {% block page_title %}
-    {{ property.name }}
+  {{ property.name }}
 {% endblock page_title %}
 
 {% block main %}
-    <h1>Update</h1>
-    <div class="card">
-        <div class="card-body">
-            <form action="" method="post">
-                {% csrf_token %}
-                {{ form }}
-                <button type="submit">Update</button>
-            </form>
-        </div>
+  <h1>Update</h1>
+  <div class="card">
+    <div class="card-body">
+      <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Update</button>
+      </form>
     </div>
+  </div>
 {% endblock main %}

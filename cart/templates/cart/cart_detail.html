@@ -3,86 +3,86 @@
 {% load static %}
 
 {% block title %}
-    Your Cart
+  Your Cart
 {% endblock title %}
 
 {% block content %}
 
-    {% include "includes/navigation.html" %}
-    {% include "includes/alert.html" %}
+  {% include "includes/navigation.html" %}
+  {% include "includes/alert.html" %}
 
-    <div class="row">
-        <div class="col-12 col-lg-8 mx-auto">
-            <div class="card shadow-lg mb-3">
-                <div class="card-header pb-0">
-                    <h5>Cart</h5>
-                </div>
-                {% with total_items=cart|length %}
-                    <div class="card-body pt-0 pb-2 overflow-y-scroll">
-                        {% if total_items > 0 %}
-                            <div class="table-responsive">
-                                <table class="table table-sm table-borderless table-hover align-items-center align-middle mb-0">
-                                    <thead>
-                                        <tr>
-                                            {% with klass="text-uppercase text-secondary text-xs font-weight-bolder opacity-7" %}
-                                                <th class="{{ klass }}">Room</th>
-                                                <th class="{{ klass }}">Quantity</th>
-                                                <th class="{{ klass }}">Unit price</th>
-                                                <th class="{{ klass }}">Price</th>
-                                                <th class="{{ klass }}">Remove</th>
-                                            {% endwith %}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for item in cart %}
-                                            {% with product=item.product %}
-                                                <tr>
-                                                    <td>
-                                                        <p class="text-sm mb-0">{{ product.name }}</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-sm text-center mb-0">{{ item.quantity }}</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-sm text-center mb-0">${{ item.price }}</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-sm text-right mb-0">${{ item.total_price }}</p>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <form action="{% url "cart:cart-remove" product.id %}" method="post">
-                                                            <button type="submit" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark my-auto">
-                                                                <i class="bi bi-x-lg ms-3 cursor-pointer ms-auto" aria-label="Close">
-                                                                </i>
-                                                            </button>
-                                                            {% csrf_token %}
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            {% endwith %}
-                                        {% endfor %}
-                                        <tr>
-                                            <td>
-                                                <strong>Total</strong>
-                                            </td>
-                                            <td colspan="2"></td>
-                                            <td>
-                                                <strong>${{ cart.get_total_price }}</strong>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        {% else %}
-                            Your cart is empty
-                        {% endif %}
-                    </div>
-                    <div class="card-footer d-flex justify-content-center">
-                        <a href="{% url "properties:property-list" %}" class="btn bg-gradient-primary me-3">Continue shopping</a>
-                        <a href="{% url 'bookings:booking-create' %}" class="btn bg-gradient-dark">Checkout</a>
-                    </div>
-                </div>
-            {% endwith %}
+  <div class="row">
+    <div class="col-12 col-lg-8 mx-auto">
+      <div class="card shadow-lg mb-3">
+        <div class="card-header pb-0">
+          <h5>Cart</h5>
         </div>
+        {% with total_items=cart|length %}
+          <div class="card-body pt-0 pb-2 overflow-y-scroll">
+            {% if total_items > 0 %}
+              <div class="table-responsive">
+                <table class="table table-sm table-borderless table-hover align-items-center align-middle mb-0">
+                  <thead>
+                    <tr>
+                      {% with klass="text-uppercase text-secondary text-xs font-weight-bolder opacity-7" %}
+                        <th class="{{ klass }}">Room</th>
+                        <th class="{{ klass }}">Quantity</th>
+                        <th class="{{ klass }}">Unit price</th>
+                        <th class="{{ klass }}">Price</th>
+                        <th class="{{ klass }}">Remove</th>
+                      {% endwith %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in cart %}
+                      {% with product=item.product %}
+                        <tr>
+                          <td>
+                            <p class="text-sm mb-0">{{ product.name }}</p>
+                          </td>
+                          <td>
+                            <p class="text-sm text-center mb-0">{{ item.quantity }}</p>
+                          </td>
+                          <td>
+                            <p class="text-sm text-center mb-0">${{ item.price }}</p>
+                          </td>
+                          <td>
+                            <p class="text-sm text-right mb-0">${{ item.total_price }}</p>
+                          </td>
+                          <td class="text-center">
+                            <form action="{% url "cart:cart-remove" product.id %}" method="post">
+                              <button type="submit" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark my-auto">
+                                <i class="bi bi-x-lg ms-3 cursor-pointer ms-auto" aria-label="Close">
+                                </i>
+                              </button>
+                              {% csrf_token %}
+                            </form>
+                          </td>
+                        </tr>
+                      {% endwith %}
+                    {% endfor %}
+                    <tr>
+                      <td>
+                        <strong>Total</strong>
+                      </td>
+                      <td colspan="2"></td>
+                      <td>
+                        <strong>${{ cart.get_total_price }}</strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              Your cart is empty
+            {% endif %}
+          </div>
+          <div class="card-footer d-flex justify-content-center">
+            <a href="{% url "properties:property-list" %}" class="btn bg-gradient-primary me-3">Continue shopping</a>
+            <a href="{% url 'bookings:booking-create' %}" class="btn bg-gradient-dark">Checkout</a>
+          </div>
+        </div>
+      {% endwith %}
     </div>
+  </div>
 {% endblock content %}

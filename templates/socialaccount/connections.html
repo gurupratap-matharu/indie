@@ -3,80 +3,80 @@
 {% load static i18n %}
 
 {% block title %}
-    {% trans "Account Connections" %}
+  {% trans "Account Connections" %}
 {% endblock title %}
 
 {% block main %}
-    <main class="main-content mt-0">
-        <section>
-            <div class="page-header min-vh-100">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-                            <div class="card card-plain">
-                                <div class="card-body">
-                                    <h3 class="font-weight-bolder text-primary text-gradient">{% trans "Account Connections" %}</h3>
-                                    {% if form.accounts %}
-                                        <p>
-                                            {% blocktranslate %}
+  <main class="main-content mt-0">
+    <section>
+      <div class="page-header min-vh-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+              <div class="card card-plain">
+                <div class="card-body">
+                  <h3 class="font-weight-bolder text-primary text-gradient">{% trans "Account Connections" %}</h3>
+                  {% if form.accounts %}
+                    <p>
+                      {% blocktranslate %}
                                         You can sign in to your account using any of the following third party accounts
                                         {% endblocktranslate %}
-                                        </p>
-                                        <form method="post" action="{% url 'socialaccount_connections' %}">
-                                            {% csrf_token %}
-                                            <fieldset>
-                                                {% if form.non_field_errors %}<div id="errorMsg">{{ form.non_field_errors }}</div>{% endif %}
-                                                {% for base_account in form.accounts %}
-                                                    {% with base_account.get_provider_account as account %}
-                                                        <div class="form-check mb-3">
-                                                            <input id="id_account_{{ base_account.id }}"
-                                                                   type="radio"
-                                                                   name="account"
-                                                                   value="{{ base_account.id }}"
-                                                                   class="form-check-input" />
-                                                            <label for="id_account_{{ base_account.id }}">
-                                                                <span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }} mx-1">{{ account.get_brand.name }}</span>
-                                                                {{ account }}
-                                                            </label>
-                                                        </div>
-                                                    {% endwith %}
-                                                {% endfor %}
-                                                <button type="submit" class="btn bg-gradient-primary mb-0 mt-3">{% trans "Remove" %}</button>
-                                            </fieldset>
-                                        </form>
-                                    {% else %}
-                                        <p>{% trans "You currently have no social network accounts connected to this account." %}</p>
-                                    {% endif %}
-                                    <hr />
-                                    <h5>{% trans "Add a 3rd Party Account" %}</h5>
-                                    <ul class="socialaccount_providers">
-
-                                        {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
-
-                                    </ul>
-
-                                    {% include "socialaccount/snippets/login_extra.html" %}
-
-                                </div>
+                    </p>
+                    <form method="post" action="{% url 'socialaccount_connections' %}">
+                      {% csrf_token %}
+                      <fieldset>
+                        {% if form.non_field_errors %}<div id="errorMsg">{{ form.non_field_errors }}</div>{% endif %}
+                        {% for base_account in form.accounts %}
+                          {% with base_account.get_provider_account as account %}
+                            <div class="form-check mb-3">
+                              <input id="id_account_{{ base_account.id }}"
+                                     type="radio"
+                                     name="account"
+                                     value="{{ base_account.id }}"
+                                     class="form-check-input" />
+                              <label for="id_account_{{ base_account.id }}">
+                                <span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }} mx-1">{{ account.get_brand.name }}</span>
+                                {{ account }}
+                              </label>
                             </div>
-                            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
-                                <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
-                                    <img src="{% static 'assets/img/shapes/pattern-lines.svg' %}"
-                                         alt="pattern-lines"
-                                         class="position-absolute opacity-4 start-0" />
-                                    <div class="position-relative">
-                                        <img class="max-width-500 w-100 position-relative z-index-2"
-                                             src="{% static 'assets/img/illustrations/chat.png' %}"
-                                             alt="chat-img" />
-                                    </div>
-                                    <h4 class="mt-5 text-white font-weight-bolder">"Manage your social accounts"</h4>
-                                    <p class="text-white">You can connect or disconnect your social accounts with your email id here.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                          {% endwith %}
+                        {% endfor %}
+                        <button type="submit" class="btn bg-gradient-primary mb-0 mt-3">{% trans "Remove" %}</button>
+                      </fieldset>
+                    </form>
+                  {% else %}
+                    <p>{% trans "You currently have no social network accounts connected to this account." %}</p>
+                  {% endif %}
+                  <hr />
+                  <h5>{% trans "Add a 3rd Party Account" %}</h5>
+                  <ul class="socialaccount_providers">
+
+                    {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
+
+                  </ul>
+
+                  {% include "socialaccount/snippets/login_extra.html" %}
+
                 </div>
+              </div>
+              <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
+                  <img src="{% static 'assets/img/shapes/pattern-lines.svg' %}"
+                       alt="pattern-lines"
+                       class="position-absolute opacity-4 start-0" />
+                  <div class="position-relative">
+                    <img class="max-width-500 w-100 position-relative z-index-2"
+                         src="{% static 'assets/img/illustrations/chat.png' %}"
+                         alt="chat-img" />
+                  </div>
+                  <h4 class="mt-5 text-white font-weight-bolder">"Manage your social accounts"</h4>
+                  <p class="text-white">You can connect or disconnect your social accounts with your email id here.</p>
+                </div>
+              </div>
             </div>
-        </section>
-    </main>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 {% endblock main %}
