@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -5,6 +7,8 @@ from django.contrib.contenttypes.models import ContentType
 import factory
 
 from properties.models import Addon, Property, Room
+
+logger = logging.getLogger(__name__)
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -50,6 +54,7 @@ class PropertyOwnerFactory(UserFactory):
 
     @factory.post_generation
     def groups(self, create, extracted, **kwargs):
+        logger.info("create:%s extracted:%s kwargs:%s" % (create, extracted, kwargs))
         # By default add this user to the Owner group.
         owners = OwnerGroupFactory()
         self.groups.add(owners)
@@ -85,6 +90,8 @@ class OwnerGroupFactory(GroupFactory):
         """
         Add CRUD permission to this group.
         """
+
+        logger.info("create:%s extracted:%s kwargs:%s" % (create, extracted, kwargs))
 
         content_types = ContentType.objects.get_for_models(Property, Room, Addon)
         perms = Permission.objects.filter(content_type__in=content_types.values())

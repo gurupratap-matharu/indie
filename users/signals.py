@@ -12,6 +12,10 @@ def post_save_receiver(sender, instance, created, **kwargs):
     """
 
     # Your stuff here
+    logger.info(
+        "sender:%s instance:%s created:%s kwargs:%s "
+        % (sender, instance, created, kwargs)
+    )
 
 
 # Wire up our callback with active AUTH USER MODEL
